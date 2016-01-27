@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "28F9BF60BDE04120CAA5C14E2E8A353C61837EB0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "FCDCAEF5CBEFF05A4041A61BC2948A139C1A59F2" : 0,
+    "28F9BF60BDE04120CAA5C14E2E8A353C61837EB0" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B569EB66-66E6-479A-8C33-891D27C74377",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "FCDCAEF5CBEFF05A4041A61BC2948A139C1A59F2" : "PostYourFun",
+    "28F9BF60BDE04120CAA5C14E2E8A353C61837EB0" : "pyf\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "PostYourFun",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "PostYourFun.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "r8tin.net:pyf.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "28F9BF60BDE04120CAA5C14E2E8A353C61837EB0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/pyfdev\/iospilot.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FCDCAEF5CBEFF05A4041A61BC2948A139C1A59F2"
+    }
+  ]
+}

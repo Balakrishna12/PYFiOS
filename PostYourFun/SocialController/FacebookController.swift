@@ -12,6 +12,7 @@ import FBSDKLoginKit
 import FBSDKShareKit
 
 class FacebookController {
+    
     var mDelegate: SocialControllerDelegate!
     var userData: AnyObject!
 //    var dataset: AWSCognitoDataset
@@ -20,7 +21,7 @@ class FacebookController {
     
     func fbLogin(){
         
-        var fbLoginManager: FBSDKLoginManager = FBSDKLoginManager()
+        let fbLoginManager: FBSDKLoginManager = FBSDKLoginManager()
         fbLoginManager.logInWithReadPermissions(["email"], handler: {(result, error) -> Void in
             if error == nil {
                 var fbLoginResult: FBSDKLoginManagerLoginResult = result
@@ -43,7 +44,7 @@ class FacebookController {
                 if error == nil {
                     print(result)
                     self.userData = result
-                    var id = self.userData.objectForKey("id") as! String
+                    let id = self.userData.objectForKey("id") as! String
                     print(id)
                     if self.mDelegate != nil
                     {
@@ -55,7 +56,7 @@ class FacebookController {
     }
     
     func shareToFacebook(viewController: UIViewController, description: String!, parkName: String!, parkUrl: String!, imageUrl: String!, placeId: String!){
-        var shareContent = FBSDKShareLinkContent()
+        let shareContent = FBSDKShareLinkContent()
         shareContent.contentURL = NSURL(string: parkUrl)
         shareContent.contentTitle = parkName
         shareContent.imageURL = NSURL(string: imageUrl)
@@ -66,7 +67,7 @@ class FacebookController {
     }
     
     func shareImageToFacebook(viewController: UIViewController, thumbImage: String, placeId: String, fullImage: String){
-        var shareLink: FBSDKShareLinkContent = FBSDKShareLinkContent()
+        let shareLink: FBSDKShareLinkContent = FBSDKShareLinkContent()
         shareLink.imageURL = NSURL(string: thumbImage)
         shareLink.contentURL = NSURL(string: fullImage)
         shareLink.placeID = placeId

@@ -31,9 +31,9 @@ class DeviceRatingDBController {
                     self.aDelegate.onAWSTaskSuccess(RATE_DB)
                 }
                 
-            }else{
+            } else {
                 if ((task.error) != nil) {
-                    var error = task.error!.localizedDescription
+                    let error = task.error!.localizedDescription
                     self.aDelegate.onAWSTaskFailed(error)
                 }
             }

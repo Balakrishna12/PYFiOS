@@ -764,7 +764,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "234464b8-30e7-4daf-a858-e80f73d0a09d";
+				PROVISIONING_PROFILE = "d5392dbb-05b4-470b-af26-91704720debc";
 				SWIFT_OBJC_BRIDGING_HEADER = "PostYourFun/PostYourFun-Bridge-Header.h";
 			};
 			name = Debug;
@@ -853,7 +853,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "234464b8-30e7-4daf-a858-e80f73d0a09d";
+				PROVISIONING_PROFILE = "d5392dbb-05b4-470b-af26-91704720debc";
 				SWIFT_OBJC_BRIDGING_HEADER = "PostYourFun/PostYourFun-Bridge-Header.h";
 			};
 			name = Release;

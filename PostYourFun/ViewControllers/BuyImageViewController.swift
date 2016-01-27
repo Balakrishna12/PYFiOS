@@ -9,10 +9,10 @@
 import UIKit
 import MBProgressHUD
 
-protocol ImageDownloadDelegate{
-    func downloadSuccess()
-    func downloadFailed()
-}
+//protocol ImageDownloadDelegate{
+//    func downloadSuccess()
+//    func downloadFailed()
+//}
 
 class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDynamoDBGetDataDelegate, AWSControllerDelegate, CustomTextFieldDelegate, PayPalPaymentDelegate, ImageDownloadDelegate {
 
@@ -73,7 +73,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
         
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         
-        selectedImage.image = UIImage(named: "default_image")
+//        selectedImage.image = UIImage(named: "default_image")
         
         userId = NSUserDefaults.standardUserDefaults().objectForKey(kUserId) as? String
         
@@ -132,6 +132,8 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
             let controller = self.storyboard?.instantiateViewControllerWithIdentifier("ImagesCollectionViewController") as! ImagesCollectionViewController
             
             controller.imagesArray = image
+            controller.selectedParkId = self.selectedParkId
+            controller.parkSocialInfos = self.parkSocialInfos
             controller.freeDownload = self.freeDownload
             
             self.presentViewController(controller, animated: true, completion: nil)
@@ -169,6 +171,12 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
 
         let selectedPark = parks[0]
         
+        if (selectedPark.AllInclusive == 1) {
+            self.freeDownload = true
+        } else {
+            self.freeDownload = false
+        }
+        
         for ride in self.rides {
             if ride.ParkId == selectedPark.ParkId {
                 self.selectedDevices.append(ride)
@@ -190,7 +198,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
             selectedDevices.removeAll()
             rideNames.removeAll()
             
-            if index != nil{
+            if index != nil {
                 let selectedPark = self.parks[index]
                 print(selectedPark.AllInclusive, terminator: "")
                 print(selectedPark.Name, terminator: "")
@@ -223,7 +231,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
         if (self.selectedDevice.HasMonitor.boolValue == true) {
             imageQueryDBController.getImageInfoForAllDevices(self.selectedDevices, displayID: imageNumber.text!)
         } else {
-            imageQueryDBController.getImageInfo(self.selectedDevice, displayID: imageNumber.text!)
+            imageQueryDBController.getImageInfo(self.selectedDevice, displayID: "")
         }
         
     }
@@ -302,7 +310,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
                 print("Share image", terminator: "")
                 var placeId: String = ""
                 for index in 0..<self.parkSocialInfos.count{
-                    if self.selectedParkId == self.parkSocialInfos[index].ParkId{
+                    if self.selectedParkId == self.parkSocialInfos[index].ParkId {
                         placeId = self.parkSocialInfos[index].Facebook!
                     }                    
                 }

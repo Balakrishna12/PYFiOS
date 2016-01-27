@@ -36,10 +36,16 @@ class ImageGalleryViewCell: UICollectionViewCell {
     func cellRadioClicked(sender: AnyObject){
         if radioButton.selected != true{
             radioButton.selected = true
-            self.buttonDelegate.onRadioClicked(true, selectedCell: self)
-        } else{
+            
+            if (self.buttonDelegate != nil) {
+                self.buttonDelegate.onRadioClicked(true, selectedCell: self)
+            }
+        } else {
             radioButton.selected = false
-            self.buttonDelegate.onRadioClicked(false, selectedCell: self)
+            
+            if (self.buttonDelegate != nil) {
+                self.buttonDelegate.onRadioClicked(false, selectedCell: self)
+            }
         }
     }
     

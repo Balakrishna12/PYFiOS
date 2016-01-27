@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 
-class RateViewController: UIViewController, CustomTextFieldDelegate, SocialControllerDelegate, AWSDynamoDBGetDataDelegate, AWSControllerDelegate{
+class RateViewController: UIViewController, CustomTextFieldDelegate, SocialControllerDelegate, AWSDynamoDBGetDataDelegate, AWSControllerDelegate {
 
     @IBOutlet weak var parkSelector: CustomTextField!
     @IBOutlet weak var rideSelector: CustomTextField!
@@ -142,7 +142,7 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
     }
     
     func onSuccess(type: Int, action: Int, userData: AnyObject) {
-        var progressDg = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     }
     
     func onFailure(type: Int, action: Int) {
@@ -162,17 +162,19 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
             self.delegatecount = 0
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             
-            var speedRate = Int(self.speedRating.rating)
-            var g_force = Int(self.gForceRating.rating)
-            var adrenaline = Int(self.adrenalinRating.rating)
+            let speedRate = Int(self.speedRating.rating)
+            let g_force = Int(self.gForceRating.rating)
+            let adrenaline = Int(self.adrenalinRating.rating)
             //Share to Facebook
             
-//            self.fbController.shareToFacebook(self, description: generalFbShareText + self.rideSelector.text + " in " + self.parkSelector.text +
+//            FacebookController().shareToFacebook(self, description: generalFbShareText + self.rideSelector.text + " in " + self.parkSelector.text +
 //                ". Speed " + String(speedRate) + "/5, G-Force " + String(g_force) + "/5 and Adrenaline kick " + String(adrenaline) + "/5." , parkName: self.parkSelector.text, parkUrl: self.selectedParkInfo.WebSite, imageUrl: self.selectedParkInfo.ImageUrl, placeId: self.selectedparkSocialInfo.Facebook)
             
-//            self.fbController.shareToFacebook(self, description: , parkName: self.parkSelector.text, parkUrl: self.selectedParkInfo.WebSite, imageUrl: self.selectedParkInfo.ImageUrl, placeId: self.selectedparkSocialInfo.Facebook)
+            let description = generalFbShareText + self.rideSelector.text! + " in " + self.parkSelector.text! + ". Speed " + String(speedRate) + "/5, G-Force " + String(g_force) + "/5 and Adrenaline kick " + String(adrenaline) + "/5."
+            
+            FacebookController().shareToFacebook(self, description: description, parkName: self.parkSelector.text, parkUrl: self.selectedParkInfo.WebSite, imageUrl: self.selectedParkInfo.ImageUrl, placeId: self.selectedparkSocialInfo.Facebook)
             //Give Rating on AWS
-//            self.deviceRatingDBController.giveRating(self.userId, deviceId: self.selectedDeviceId, speedRate: String(speedRate), g_forceRate: String(g_force), adrenalineRate: String(adrenaline), comment: (self.commentTextfield.text?)!)
+            self.deviceRatingDBController.giveRating(self.userId, deviceId: self.selectedDeviceId, speedRate: String(speedRate), g_forceRate: String(g_force), adrenalineRate: String(adrenaline), comment: self.commentTextfield.text!)
         }
     }
     

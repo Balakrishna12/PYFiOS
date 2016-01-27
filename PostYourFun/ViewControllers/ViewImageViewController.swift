@@ -27,8 +27,9 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     var fbController = FacebookController()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         userImageDBController.aGetDataDelegate = self
         deviceDBController.aGetDataDelegate = self
         fbController.mDelegate = self
@@ -52,17 +53,17 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         }
         if type == IMAGE_DB{
             var images = datas as! Array<ImageMapper>
-            var image = images[0]
+            let image = images[0]
             deviceDBController.getDevice(image.DeviceId!)
         }
         if type == DEVICE_DB{
             var devices = datas as! Array<DeviceMapper>
-            var device = devices[0]
+            let device = devices[0]
             parkSocialDBController.getParkSocialMediaInfo(device.ParkId!)
         }
         if type == PARK_SOCIAL_DB{
             var results = datas as! Array<ParkSocialMediaMapper>
-            var result = results[0]
+            let result = results[0]
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             fbController.shareImageToFacebook(self, thumbImage: self.userImages[selectedImageIndex].ImageThumbUrl!, placeId: result.Facebook!, fullImage: self.userImages[selectedImageIndex].ImageUrl!)
         }
@@ -87,7 +88,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ImageGalleryViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("imageGalleryIdentifier", forIndexPath: indexPath) as! ImageGalleryViewCell
-        var imageUrl = self.userImages[indexPath.row].ImageThumbUrl
+        let imageUrl = self.userImages[indexPath.row].ImageThumbUrl
         cell.thumbImage.sd_setImageWithURL(NSURL(string: imageUrl!))
         cell.setActions();
         cell.buttonDelegate = self
@@ -97,32 +98,36 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let width = screenSize.width
-        let height = screenSize.height
+//        let height = screenSize.height
         return CGSizeMake((width - 50) / 2, (width - 50) / 2 * 0.6)
     }
     
     func onImageClicked(selectedCell: ImageGalleryViewCell) {
-        var checkedPath: NSIndexPath = self.imageGallery.indexPathForCell(selectedCell)!        
-        var imageInfo = JTSImageInfo()
+        let checkedPath: NSIndexPath = self.imageGallery.indexPathForCell(selectedCell)!
+        let imageInfo = JTSImageInfo()
         imageInfo.imageURL = NSURL(string: self.userImages[checkedPath.row].ImageUrl!)
-        var imageViewer = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
+        let imageViewer = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
         imageViewer.showFromViewController(self.parentViewController, transition: JTSImageViewControllerTransition.FromOriginalPosition)
     }
     
     func onRadioClicked(flag: Bool, selectedCell: ImageGalleryViewCell) {
-        if flag == true{
+        
+        if flag == true {
+            
+            selectedCell.unCheckRadio()
+            
             let checkedPath: NSIndexPath = self.imageGallery.indexPathForCell(selectedCell)!
-            for section in 0..<self.imageGallery.numberOfSections(){
-                if section == checkedPath.section{
-                    for row in 0..<self.imageGallery.numberOfItemsInSection(section){
-                        let cellPath: NSIndexPath = NSIndexPath(forRow: row, inSection: section)
-                        let cell: ImageGalleryViewCell = self.imageGallery.cellForItemAtIndexPath(cellPath) as! ImageGalleryViewCell
-                        if checkedPath.row != cellPath.row {
-                            cell.unCheckRadio()
-                        }
-                    }
-                }
-            }
+//            for section in 0..<self.imageGallery.numberOfSections(){
+//                if section == checkedPath.section{
+//                    for row in 0..<self.imageGallery.numberOfItemsInSection(section){
+//                        let cellPath: NSIndexPath = NSIndexPath(forRow: row, inSection: section)
+//                        let cell: ImageGalleryViewCell = self.imageGallery.cellForItemAtIndexPath(cellPath) as! ImageGalleryViewCell
+//                        if checkedPath.row != cellPath.row {
+//                            cell.unCheckRadio()
+//                        }
+//                    }
+//                }
+//            }
             selectedImageIndex = checkedPath.row
         } else{
             selectedImageIndex = -1
@@ -138,28 +143,17 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     @IBAction func shareButtonClicked(sender: AnyObject) {
-        if selectedImageIndex == -1{
-            var checkAlert = UIAlertController(title: "Select Image", message: "Please select image to share", preferredStyle: UIAlertControllerStyle.Alert)
+        if selectedImageIndex == -1 {
+            let checkAlert = UIAlertController(title: "Select Image", message: "Please select image to share", preferredStyle: UIAlertControllerStyle.Alert)
             checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
             }))
             presentViewController(checkAlert, animated: true, completion: nil)
-        }else{
+        } else {
             print("Share image on Facebook", terminator: "")
             // Share Image on Facebook
-            var progressDg = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             self.imageDBController.getImage(self.userImages[selectedImageIndex].ImageId)
         }
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -10,12 +10,14 @@ import Foundation
 import AWSDynamoDB
 
 class UserImageDBController {
+    
     var aDelegate: AWSControllerDelegate!
     var aGetDataDelegate: AWSDynamoDBGetDataDelegate!
     var userImage: UserImagesMapper = UserImagesMapper()
     var userTransactions: Array<UserImagesMapper> = Array<UserImagesMapper>()
     
     func registerPayment(userId: String, dateTime: String, imageId: String, imageUrl: String, imageThumbUrl: String!){
+        
         self.userImage.TransactionId = NSUUID().UUIDString
         self.userImage.UserId = userId
         self.userImage.DateTime = dateTime
@@ -25,16 +27,17 @@ class UserImageDBController {
         self.userImage.Owned = 1
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+        
         dynamoDBObjectMapper.save(self.userImage).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
             
-            if task.result != nil{
+            if task.result != nil {
                 if self.aDelegate != nil{
                     self.aDelegate.onAWSTaskSuccess(USERIMAGE_DB)
                 }
                 
-            }else{
+            } else {
                 if ((task.error) != nil) {
-                    var error = task.error!.localizedDescription
+                    let error = task.error!.localizedDescription
                     self.aDelegate.onAWSTaskFailed(error)
                 }
             }
@@ -42,19 +45,24 @@ class UserImageDBController {
         })
     }
     
-    func readTransactions(userId: String!){
+    func readTransactions(userId: String!) {
+        
         self.userTransactions.removeAll()
+        
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
         let queryExpression = AWSDynamoDBScanExpression()
         
-        var condition = AWSDynamoDBCondition()
+        let condition = AWSDynamoDBCondition()
         condition.comparisonOperator = AWSDynamoDBComparisonOperator.EQ
-        var user_Id = AWSDynamoDBAttributeValue()
+        let user_Id = AWSDynamoDBAttributeValue()
         user_Id.S = userId
         
         condition.attributeValueList = [user_Id]
         
-        queryExpression.scanFilter = ["UserId":condition]
+        let scanInput = AWSDynamoDBScanInput()
+        
+        scanInput.expressionAttributeNames = ["UserId" : condition]
+        scanInput.expressionAttributeValues = ["UserId" : condition]
         
         dynamoDBObjectMapper.scan(UserImagesMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
             

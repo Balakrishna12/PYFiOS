@@ -9,13 +9,21 @@
 import UIKit
 import MBProgressHUD
 
-class ImagesCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, AWSDynamoDBGetDataDelegate, PayPalPaymentDelegate {
+protocol ImageDownloadDelegate{
+    func downloadSuccess()
+    func downloadFailed()
+}
+
+
+class ImagesCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, AWSDynamoDBGetDataDelegate, PayPalPaymentDelegate, AWSControllerDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     var imagesArray: [AnyObject] = []
-    var freeDownload : Bool = false
     
+    var parkSocialInfos: [ParkSocialMediaMapper] = []
+    var freeDownload : Bool = false
+    var selectedParkId: String!
     var userID: String!
     
     var userImagesArray: Array<UserImagesMapper> = []
@@ -46,10 +54,12 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         self.userID = NSUserDefaults.standardUserDefaults().objectForKey(kUserId) as! String
         
         userImageDBController.aGetDataDelegate = self
+        userImageDBController.aDelegate = self
         userImageDBController.readTransactions(self.userID)
     }
     
     func onGetDataSuccess(datas: Array<AnyObject>!, type: Int) {
+        
         MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
         self.userImagesArray = datas as! Array<UserImagesMapper>
         
@@ -153,7 +163,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         payment.currencyCode = "EUR"
         payment.shortDescription = self.selectedImageName
         
-        if (self.selectedImageName == nil){
+        if (self.selectedImageName == nil) {
         
             let checkAlert = UIAlertController(title: "No Image", message: "Please select image", preferredStyle: UIAlertControllerStyle.Alert)
             
@@ -162,7 +172,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             }))
             presentViewController(checkAlert, animated: true, completion: nil)
             
-        } else if(!self.userImageUrls.contains((IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!))) {
+        } else if (!self.userImageUrls.contains((IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!))) {
             if (freeDownload){
                 MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 self.selectedImageUrl = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
@@ -235,21 +245,64 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             // check if it exists before downloading it
             if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
                 print("The file already exists at path", terminator: "")
-                self.imageDownloadDelegate.downloadFailed()
+//                self.imageDownloadDelegate.downloadFailed()
+                self.downloadFailed()
             } else {
                 //  if the file doesn't exist
                 //  just download the data from your url
                 if let myAudioDataFromUrl = NSData(contentsOfURL: audioUrl){
                     // after downloading your data you need to save it to your destination url
                     if myAudioDataFromUrl.writeToURL(destinationUrl, atomically: true) {
-                        self.imageDownloadDelegate.downloadSuccess()
+//                        self.imageDownloadDelegate.downloadSuccess()
+                        self.downloadSuccess()
                     } else {
-                        self.imageDownloadDelegate.downloadFailed()
+//                        self.imageDownloadDelegate.downloadFailed()
+                        self.downloadFailed()
                     }
                 }
             }
         }
     }
     
-
+ 
+    //AWS task delegate
+    func onAWSTaskSuccess(type: Int) {
+        
+        if type == USERIMAGE_DB {
+            
+            print("Buy image", terminator: "")
+            
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            
+            let confirmAlert = UIAlertController(title: "Share Image", message: "Share this image with Facebook", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            confirmAlert.addAction(UIAlertAction(title: "Share", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                print("Share image", terminator: "")
+                var placeId = ""
+                for parkInfo: ParkSocialMediaMapper in self.parkSocialInfos {
+                    if self.selectedParkId == parkInfo.ParkId {
+                        placeId = parkInfo.Facebook!
+                    }
+                }
+                FacebookController().shareImageToFacebook(self, thumbImage: IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_THUMB_STRING + self.gotImage.Name!, placeId: placeId, fullImage: IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!)
+            }))
+            confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                print("Cancel share image", terminator: "")
+            }))
+            
+            presentViewController(confirmAlert, animated: true, completion: nil)
+        }
+    }
+    
+    func onAWSTaskFailed(error: String!) {
+        
+        print(error, terminator: "")
+        
+        let checkAlert = UIAlertController(title: "Error", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+        }))
+        presentViewController(checkAlert, animated: true, completion: nil)
+    }
+    
 }
