@@ -63,6 +63,8 @@ class ImageQueryDBController {
         
         self.imageQuery.removeAll()
         
+        var count = 0
+        
         for device:DeviceMapper in devices {
             
             let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
@@ -90,6 +92,8 @@ class ImageQueryDBController {
             
             dynamoDBObjectMapper.scan(ImageQueryMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
                 
+                count = count + 1
+                
                 if task.result != nil {
                     let result = task.result as! AWSDynamoDBPaginatedOutput
                     for item in result.items as! [ImageQueryMapper] {
@@ -97,8 +101,10 @@ class ImageQueryDBController {
                             self.imageQuery.append(item)
                         }
                     }
-                    if self.aGetDataDelegate != nil{
-                        self.aGetDataDelegate.onGetDataSuccess(self.imageQuery, type: IMAGEQUERY_DB)
+                    if self.aGetDataDelegate != nil {
+                        if count == devices.count {
+                            self.aGetDataDelegate.onGetDataSuccess(self.imageQuery, type: IMAGEQUERY_DB)
+                        }
                     }
                 }
                 if ((task.error) != nil) {
