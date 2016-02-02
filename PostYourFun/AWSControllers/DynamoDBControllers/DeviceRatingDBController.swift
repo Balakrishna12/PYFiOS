@@ -28,13 +28,17 @@ class DeviceRatingDBController {
             
             if task.result != nil{
                 if self.aDelegate != nil{
-                    self.aDelegate.onAWSTaskSuccess(RATE_DB)
+                    if self.aDelegate != nil {
+                        self.aDelegate.onAWSTaskSuccess(RATE_DB)
+                    }
                 }
                 
             } else {
                 if ((task.error) != nil) {
                     let error = task.error!.localizedDescription
-                    self.aDelegate.onAWSTaskFailed(error)
+                    if self.aDelegate != nil {
+                        self.aDelegate.onAWSTaskFailed(error)
+                    }
                 }
             }
             return nil

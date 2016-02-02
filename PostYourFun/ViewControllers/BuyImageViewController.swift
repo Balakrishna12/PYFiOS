@@ -228,8 +228,8 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
         
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         
-        if (self.selectedDevice.HasMonitor.boolValue == true) {
-            imageQueryDBController.getImageInfoForAllDevices(self.selectedDevices, displayID: imageNumber.text!)
+        if (self.selectedDevice.HasMonitor.boolValue == false) {
+            imageQueryDBController.getImageInfoForAllDevices(self.selectedDevices, displayID: "")
         } else {
             imageQueryDBController.getImageInfo(self.selectedDevice, displayID: "")
         }

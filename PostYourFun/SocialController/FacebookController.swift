@@ -22,6 +22,7 @@ class FacebookController {
     func fbLogin(){
         
         let fbLoginManager: FBSDKLoginManager = FBSDKLoginManager()
+        
         fbLoginManager.logInWithReadPermissions(["email"], handler: {(result, error) -> Void in
             if error == nil {
                 var fbLoginResult: FBSDKLoginManagerLoginResult = result

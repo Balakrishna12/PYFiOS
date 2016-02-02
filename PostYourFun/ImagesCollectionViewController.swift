@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import JTSImageViewController
 
 protocol ImageDownloadDelegate{
     func downloadSuccess()
@@ -108,6 +109,12 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         
         self.selectedImageName = image.Name
         self.gotImage = image
+    
+        
+//        let imageInfo = JTSImageInfo()
+//        imageInfo.imageURL = NSURL(string: IMAGE_CONSTANT_URL + image.Region! + IMAGE_THUMB_STRING + image.Name!)
+//        let imageViewer = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
+//        imageViewer.showFromViewController(self, transition: JTSImageViewControllerTransition.FromOriginalPosition)
         
         var frame = CGRectZero
 

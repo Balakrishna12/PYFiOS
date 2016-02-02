@@ -51,8 +51,12 @@ class DeviceDBController {
         
         let scanInput = AWSDynamoDBScanInput()
         
-        scanInput.expressionAttributeNames = ["DeviceId" : condition]
-        scanInput.expressionAttributeValues = ["DeviceId" : condition]
+//        scanInput.expressionAttributeNames = ["DeviceId" : condition]
+//        scanInput.expressionAttributeValues = ["DeviceId" : condition]
+        
+        scanInput.scanFilter = ["DeviceId":condition]
+        
+        queryExpression.filterExpression = scanInput.filterExpression
         
         dynamoDBObjectMapper.scan(DeviceMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
             

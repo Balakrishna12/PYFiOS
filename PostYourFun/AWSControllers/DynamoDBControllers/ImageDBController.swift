@@ -27,7 +27,7 @@ class ImageDBController {
         
         let scanInput = AWSDynamoDBScanInput()
         
-        scanInput.expressionAttributeNames = ["ImageId" : condition]
+//        scanInput.expressionAttributeNames = ["ImageId" : condition]
         scanInput.expressionAttributeValues = ["ImageId" : condition]
         
         queryExpression.filterExpression = scanInput.filterExpression

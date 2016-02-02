@@ -61,8 +61,12 @@ class UserImageDBController {
         
         let scanInput = AWSDynamoDBScanInput()
         
-        scanInput.expressionAttributeNames = ["UserId" : condition]
-        scanInput.expressionAttributeValues = ["UserId" : condition]
+//        scanInput.expressionAttributeNames = ["UserId" : condition]
+//        scanInput.expressionAttributeValues = ["UserId" : condition]
+        
+        scanInput.scanFilter = ["UserId":condition]
+        
+        queryExpression.filterExpression = scanInput.filterExpression
         
         dynamoDBObjectMapper.scan(UserImagesMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
             

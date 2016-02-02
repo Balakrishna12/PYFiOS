@@ -19,7 +19,7 @@ class UserDBController {
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
         
-        var user = UserMapper()
+        let user = UserMapper()
         
         user.UserId = id
         user.Email = email
@@ -53,7 +53,7 @@ class UserDBController {
                 let paginatedOutput = task.result as! AWSDynamoDBPaginatedOutput
                 for item in paginatedOutput.items as! [UserMapper]{
                     self.users.append(item)
-                    var userID = item.UserId!
+                    let userID = item.UserId!
                     print(userID)
                 }
                 if self.aDelegate != nil{

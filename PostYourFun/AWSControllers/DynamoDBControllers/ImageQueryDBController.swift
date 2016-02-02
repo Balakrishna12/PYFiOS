@@ -34,8 +34,7 @@ class ImageQueryDBController {
         
         let scanInput = AWSDynamoDBScanInput()
         
-        scanInput.expressionAttributeNames = ["DisplayId" : condition]
-        scanInput.expressionAttributeValues = ["DisplayId" : condition]
+        scanInput.scanFilter = ["DisplayId":condition]
         
         queryExpression.filterExpression = scanInput.filterExpression
         
@@ -81,8 +80,10 @@ class ImageQueryDBController {
             
             let scanInput = AWSDynamoDBScanInput()
             
-            scanInput.expressionAttributeNames = ["DisplayId" : condition]
-            scanInput.expressionAttributeValues = ["DisplayId" : condition]
+//            scanInput.expressionAttributeNames = ["DisplayId" : condition]
+//            scanInput.expressionAttributeValues = ["DisplayId" : condition]
+            
+            scanInput.scanFilter = ["DisplayId":condition]
             
             queryExpression.filterExpression = scanInput.filterExpression
             

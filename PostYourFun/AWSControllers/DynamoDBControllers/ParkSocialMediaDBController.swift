@@ -53,7 +53,13 @@ class ParkSocialMediaDBcontroller {
         
         condition.attributeValueList = [parkId]
         
-        queryExpression.scanFilter = ["ParkId":condition]
+//        queryExpression.scanFilter = ["ParkId":condition]
+        
+        let scanInput = AWSDynamoDBScanInput()
+        
+        scanInput.scanFilter = ["DisplayId":condition]
+        
+        queryExpression.filterExpression = scanInput.filterExpression
         
         dynamoDBObjectMapper.scan(ParkSocialMediaMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
             

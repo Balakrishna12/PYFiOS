@@ -28,7 +28,13 @@ class UserFacebookDBController {
         
         condition.attributeValueList = [fbId]
         
-        queryExpression.scanFilter = ["FacebookId": condition]
+//        queryExpression.scanFilter = ["FacebookId": condition]
+        
+        let scanInput = AWSDynamoDBScanInput()
+        
+        scanInput.scanFilter = ["FacebookId":condition]
+        
+        queryExpression.filterExpression = scanInput.filterExpression
         
         dynamoDBObjectMapper.scan(UserFacebookMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
             

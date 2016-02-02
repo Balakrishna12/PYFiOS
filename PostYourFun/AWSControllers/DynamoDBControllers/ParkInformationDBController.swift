@@ -26,7 +26,13 @@ class ParkInformationDBController {
         
         condition.attributeValueList = [parkId]
         
-        queryExpression.scanFilter = ["ParkId":condition]
+       let scanInput = AWSDynamoDBScanInput()
+        
+        scanInput.scanFilter = ["ParkId":condition]
+        
+        queryExpression.filterExpression = scanInput.filterExpression
+        
+//        queryExpression.scanFilter = ["ParkId":condition]
         
         dynamoDBObjectMapper.scan(ParkInformationMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
             

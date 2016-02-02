@@ -26,6 +26,8 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     
     var fbController = FacebookController()
     
+    var selectedImagesArray: Array<AnyObject> = Array<AnyObject>()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -49,6 +51,13 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         if type == USERIMAGE_DB{
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             self.userImages = datas as! Array<UserImagesMapper>
+            
+            self.selectedImagesArray.removeAll()
+            
+            for _ in self.userImages {
+                self.selectedImagesArray.append(false)
+            }
+            
             self.imageGallery.reloadData()
         }
         if type == IMAGE_DB{
@@ -73,11 +82,6 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         print(error, terminator: "")
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -88,10 +92,14 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell: ImageGalleryViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("imageGalleryIdentifier", forIndexPath: indexPath) as! ImageGalleryViewCell
+        
         let imageUrl = self.userImages[indexPath.row].ImageThumbUrl
+        
         cell.thumbImage.sd_setImageWithURL(NSURL(string: imageUrl!))
         cell.setActions();
         cell.buttonDelegate = self
+        cell.radioButton.selected = self.selectedImagesArray[indexPath.row] as! Bool
+        
         return cell
     }
     
@@ -112,26 +120,39 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func onRadioClicked(flag: Bool, selectedCell: ImageGalleryViewCell) {
         
-        if flag == true {
-            
-            selectedCell.unCheckRadio()
-            
-            let checkedPath: NSIndexPath = self.imageGallery.indexPathForCell(selectedCell)!
-//            for section in 0..<self.imageGallery.numberOfSections(){
-//                if section == checkedPath.section{
-//                    for row in 0..<self.imageGallery.numberOfItemsInSection(section){
-//                        let cellPath: NSIndexPath = NSIndexPath(forRow: row, inSection: section)
-//                        let cell: ImageGalleryViewCell = self.imageGallery.cellForItemAtIndexPath(cellPath) as! ImageGalleryViewCell
-//                        if checkedPath.row != cellPath.row {
-//                            cell.unCheckRadio()
-//                        }
-//                    }
-//                }
+        let checkedPath: NSIndexPath = self.imageGallery.indexPathForCell(selectedCell)!
+        
+        self.selectedImagesArray = Array.init(count: self.userImages.count, repeatedValue: false)
+        
+        self.selectedImagesArray[checkedPath.row] = true
+        
+        self.imageGallery.reloadData()
+        
+//        if flag == true {
+//            
+//            if selectedImageIndex != -1 {
+//                
+//                
 //            }
-            selectedImageIndex = checkedPath.row
-        } else{
-            selectedImageIndex = -1
-        }
+//            
+////            for section in 0..<self.imageGallery.numberOfSections(){
+////                if section == checkedPath.section{
+////                    for row in 0..<self.imageGallery.numberOfItemsInSection(section){
+////                        let cellPath: NSIndexPath = NSIndexPath(forRow: row, inSection: section)
+////                        let cell = try self.imageGallery.cellForItemAtIndexPath(cellPath) as! ImageGalleryViewCell
+////                        if checkedPath.row != cellPath.row {
+////                            cell.unCheckRadio()
+////                        }
+////                    }
+////                }
+////            }
+//
+//        } else {
+//            
+//            selectedImageIndex = -1
+//        }
+        
+        selectedImageIndex = checkedPath.row
     }
     
     func onSuccess(type: Int, action: Int, userData: AnyObject) {

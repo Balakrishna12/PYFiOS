@@ -15,7 +15,7 @@ protocol CellImageClickDelegate{
 
 class ImageGalleryViewCell: UICollectionViewCell {
     @IBOutlet weak var thumbImage: UIImageView!
-    @IBOutlet weak var radioButton: UIButton!
+    @IBOutlet public weak var radioButton: UIButton!
     
     var buttonDelegate: CellImageClickDelegate!
     
@@ -34,7 +34,7 @@ class ImageGalleryViewCell: UICollectionViewCell {
     }
     
     func cellRadioClicked(sender: AnyObject){
-        if radioButton.selected != true{
+        if radioButton.selected != true {
             radioButton.selected = true
             
             if (self.buttonDelegate != nil) {
