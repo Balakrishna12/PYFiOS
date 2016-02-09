@@ -73,8 +73,48 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         if type == PARK_SOCIAL_DB{
             var results = datas as! Array<ParkSocialMediaMapper>
             let result = results[0]
+            
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            fbController.shareImageToFacebook(self, thumbImage: self.userImages[selectedImageIndex].ImageThumbUrl!, placeId: result.Facebook!, fullImage: self.userImages[selectedImageIndex].ImageUrl!)
+            
+            let image = self.userImages[self.selectedImageIndex]
+            
+            let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
+            
+            let imagePath = image.ImageUrl!.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            
+            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
+            
+            let imageData = NSData.init(contentsOfURL: destinationUrl)
+            
+            if imageData != nil {
+                
+                FacebookController().shareImageFileToFacebook(UIImage.init(data: imageData!)!, complition: { (connection, response, error) -> Void in
+                    
+                    if error == nil {
+                        
+                        let checkAlert = UIAlertController(title: "Success", message: "Image have been posted", preferredStyle: UIAlertControllerStyle.Alert)
+                        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                            
+                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                        }))
+                        self.presentViewController(checkAlert, animated: true, completion: nil)
+                        
+                    } else {
+                        
+                        let checkAlert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+                        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                            
+                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                        }))
+                        self.presentViewController(checkAlert, animated: true, completion: nil)
+                    }
+                })
+                
+            } else {
+                
+                fbController.shareImageToFacebook(self, thumbImage: self.userImages[selectedImageIndex].ImageThumbUrl!, placeId: result.Facebook!, fullImage: self.userImages[selectedImageIndex].ImageUrl!)
+            }
+            
         }
     }
     
@@ -95,7 +135,9 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         
         let imageUrl = self.userImages[indexPath.row].ImageThumbUrl
         
-        cell.thumbImage.sd_setImageWithURL(NSURL(string: imageUrl!))
+        if imageUrl != nil {
+            cell.thumbImage.sd_setImageWithURL(NSURL(string: imageUrl!))
+        }
         cell.setActions();
         cell.buttonDelegate = self
         cell.radioButton.selected = self.selectedImagesArray[indexPath.row] as! Bool
@@ -111,6 +153,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     func onImageClicked(selectedCell: ImageGalleryViewCell) {
+        
         let checkedPath: NSIndexPath = self.imageGallery.indexPathForCell(selectedCell)!
         let imageInfo = JTSImageInfo()
         imageInfo.imageURL = NSURL(string: self.userImages[checkedPath.row].ImageUrl!)

@@ -10,6 +10,7 @@ import Foundation
 import AWSDynamoDB
 
 class ImageDBController {
+    
     var aGetDataDelegate: AWSDynamoDBGetDataDelegate!
     var image = Array<ImageMapper>()
     

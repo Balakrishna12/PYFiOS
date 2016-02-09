@@ -9,6 +9,10 @@
 import UIKit
 import MBProgressHUD
 import JTSImageViewController
+import FBSDKCoreKit
+import FBSDKLoginKit
+import FBSDKShareKit
+
 
 protocol ImageDownloadDelegate{
     func downloadSuccess()
@@ -40,6 +44,8 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
     var imageDownloadDelegate: ImageDownloadDelegate!
     
     let reuseIdentifier = "ImageCollectionCell"
+    
+    var selectedImageView: UIImageView?
     
     
     override func viewDidLoad() {
@@ -148,6 +154,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         imageView.addSubview(button)
         
         self.view.addSubview(imageView)
+        self.selectedImageView = imageView
         
     }
     
@@ -247,7 +254,10 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             // create your document folder url
             let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
             // your destination file url
-            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(audioUrl.lastPathComponent!)
+            
+            let imagePath = audioUrl.absoluteString.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            
+            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
             print(destinationUrl, terminator: "")
             // check if it exists before downloading it
             if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
@@ -285,13 +295,60 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             
             confirmAlert.addAction(UIAlertAction(title: "Share", style: .Default, handler: { (action: UIAlertAction) -> Void in
                 print("Share image", terminator: "")
+                
                 var placeId = ""
+                
                 for parkInfo: ParkSocialMediaMapper in self.parkSocialInfos {
                     if self.selectedParkId == parkInfo.ParkId {
                         placeId = parkInfo.Facebook!
                     }
                 }
-                FacebookController().shareImageToFacebook(self, thumbImage: IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_THUMB_STRING + self.gotImage.Name!, placeId: placeId, fullImage: IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!)
+                
+                let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
+                
+                var imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
+                
+                imagePath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);
+                
+                let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
+                
+                let imageData = NSData.init(contentsOfURL: destinationUrl)
+                
+                MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                
+                if imageData != nil {
+                    
+                    FacebookController().shareImageFileToFacebook(UIImage.init(data: imageData!)!, complition: { (connection, response, error) -> Void in
+                        
+                        if error == nil {
+                            
+                            let checkAlert = UIAlertController(title: "Success", message: "Image have been posted", preferredStyle: UIAlertControllerStyle.Alert)
+                            checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                                
+                                self.selectedImageView?.removeFromSuperview()
+                                
+                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                            }))
+                            self.presentViewController(checkAlert, animated: true, completion: nil)
+                            
+                        } else {
+                            
+                            let checkAlert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+                            checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                                
+                                self.selectedImageView?.removeFromSuperview()
+                                
+                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                            }))
+                            self.presentViewController(checkAlert, animated: true, completion: nil)
+                        }
+                    })
+                    
+                } else {
+                    
+                    FacebookController().shareImageToFacebook(self, thumbImage: destinationUrl.absoluteString, placeId: "", fullImage: destinationUrl.absoluteString)
+                }
+                
             }))
             confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) -> Void in
                 print("Cancel share image", terminator: "")

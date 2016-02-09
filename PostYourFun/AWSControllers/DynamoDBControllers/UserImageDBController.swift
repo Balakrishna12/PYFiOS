@@ -72,9 +72,13 @@ class UserImageDBController {
             
             if task.result != nil {
                 let result = task.result as! AWSDynamoDBPaginatedOutput
-                for item in result.items as! [UserImagesMapper]{
-                    self.userTransactions.append(item)
-                    print(item.TransactionId!)
+                for item in result.items as! [UserImagesMapper] {
+                    
+                    if userId == item.UserId {
+                        
+                        self.userTransactions.append(item)
+                        print(item.TransactionId!)
+                    }
                 }
                 if self.aGetDataDelegate != nil{
                     self.aGetDataDelegate.onGetDataSuccess(self.userTransactions, type: USERIMAGE_DB)

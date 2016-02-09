@@ -67,12 +67,23 @@ class FacebookController {
         FBSDKShareDialog.showFromViewController(viewController, withContent: shareContent, delegate: nil)
     }
     
-    func shareImageToFacebook(viewController: UIViewController, thumbImage: String, placeId: String, fullImage: String){
+    func shareImageToFacebook(viewController: UIViewController, thumbImage: String, placeId: String, fullImage: String) {
+        
         let shareLink: FBSDKShareLinkContent = FBSDKShareLinkContent()
+
         shareLink.imageURL = NSURL(string: thumbImage)
         shareLink.contentURL = NSURL(string: fullImage)
         shareLink.placeID = placeId
         shareLink.contentTitle = "Post Your Fun Image Share"
+        
         FBSDKShareDialog.showFromViewController(viewController, withContent: shareLink, delegate: nil)
+    }
+    
+    
+    func shareImageFileToFacebook(image: UIImage, complition: FBSDKGraphRequestHandler!) {
+        
+        FBSDKGraphRequest.init(graphPath: "/me", parameters: ["picture" : image], HTTPMethod: "POST").startWithCompletionHandler { (connection:  FBSDKGraphRequestConnection!, object: AnyObject!, error: NSError!) -> Void in
+            complition(connection, object, error)
+        }
     }
 }
