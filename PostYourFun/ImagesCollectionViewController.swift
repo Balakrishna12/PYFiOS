@@ -291,10 +291,10 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             
-            let confirmAlert = UIAlertController(title: "Share Image", message: "Share this image with Facebook", preferredStyle: UIAlertControllerStyle.Alert)
+//            let confirmAlert = UIAlertController(title: "Share Image", message: "Share this image with Facebook", preferredStyle: UIAlertControllerStyle.Alert)
             
-            confirmAlert.addAction(UIAlertAction(title: "Share", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                print("Share image", terminator: "")
+//            confirmAlert.addAction(UIAlertAction(title: "Share", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//                print("Share image", terminator: "")
                 
                 var placeId = ""
                 
@@ -349,12 +349,12 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                     FacebookController().shareImageToFacebook(self, thumbImage: destinationUrl.absoluteString, placeId: "", fullImage: destinationUrl.absoluteString)
                 }
                 
-            }))
-            confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                print("Cancel share image", terminator: "")
-            }))
+//            }))
+//            confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//                print("Cancel share image", terminator: "")
+//            }))
             
-            presentViewController(confirmAlert, animated: true, completion: nil)
+//            presentViewController(confirmAlert, animated: true, completion: nil)
         }
     }
     

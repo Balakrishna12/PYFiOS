@@ -9,6 +9,7 @@
 import UIKit
 import MBProgressHUD
 import JTSImageViewController
+import SDWebImage
 
 class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, AWSDynamoDBGetDataDelegate, CellImageClickDelegate, SocialControllerDelegate {
 
@@ -48,13 +49,27 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     func onGetDataSuccess(datas: Array<AnyObject>!, type: Int) {
-        if type == USERIMAGE_DB{
+        if type == USERIMAGE_DB {
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             self.userImages = datas as! Array<UserImagesMapper>
             
             self.selectedImagesArray.removeAll()
             
-            for _ in self.userImages {
+            for image in self.userImages {
+                
+                if let imageURL = image.ImageUrl {
+                
+                   let downloader = SDWebImageDownloader.sharedDownloader()
+                    
+                    downloader.downloadImageWithURL(NSURL(string: imageURL), options: .ContinueInBackground, progress: { (progress, download) -> Void in
+                        
+                        }, completed: { (image, data, error, finished) -> Void in
+                            
+                            self.downloadFile(imageURL)
+                            
+                    })
+                }
+                
                 self.selectedImagesArray.append(false)
             }
             
@@ -70,7 +85,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             let device = devices[0]
             parkSocialDBController.getParkSocialMediaInfo(device.ParkId!)
         }
-        if type == PARK_SOCIAL_DB{
+        if type == PARK_SOCIAL_DB {
             var results = datas as! Array<ParkSocialMediaMapper>
             let result = results[0]
             
@@ -117,6 +132,37 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             
         }
     }
+    
+    
+    
+    func downloadFile(imageUrl: String) {
+        
+        if let audioUrl = NSURL(string: imageUrl) {
+            
+            let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
+            
+            let imagePath = audioUrl.absoluteString.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+            
+            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
+            print(destinationUrl, terminator: "")
+            
+            if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
+                
+                print("The file already exists at path", terminator: "")
+            } else {
+
+                if let myAudioDataFromUrl = NSData(contentsOfURL: audioUrl){
+                    
+                    if myAudioDataFromUrl.writeToURL(destinationUrl, atomically: true) {
+                        
+                    } else {
+                        
+                    }
+                }
+            }
+        }
+    }
+    
     
     func onGetDataFailed(error: String!) {
         print(error, terminator: "")
