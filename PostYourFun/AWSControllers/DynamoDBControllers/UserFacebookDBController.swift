@@ -28,8 +28,6 @@ class UserFacebookDBController {
         
         condition.attributeValueList = [fbId]
         
-//        queryExpression.scanFilter = ["FacebookId": condition]
-        
         let scanInput = AWSDynamoDBScanInput()
         
         scanInput.scanFilter = ["FacebookId":condition]

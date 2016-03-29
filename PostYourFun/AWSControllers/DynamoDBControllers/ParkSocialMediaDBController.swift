@@ -52,8 +52,6 @@ class ParkSocialMediaDBcontroller {
         
         condition.attributeValueList = [parkId]
         
-//        queryExpression.scanFilter = ["ParkId":condition]
-        
         let scanInput = AWSDynamoDBScanInput()
         
         scanInput.scanFilter = ["DisplayId":condition]

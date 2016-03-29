@@ -19,7 +19,7 @@ class TwitterController{
         Twitter.sharedInstance().logInWithCompletion{ (session, error) -> Void in
             if session != nil{
                 self.getTwitterUserData(session)
-                var value = session!.authToken + ";" + session!.authTokenSecret
+                let value = session!.authToken + ";" + session!.authTokenSecret
                 self.credentialProvider.logins = ["api.twitter.com": value]
             }
         }

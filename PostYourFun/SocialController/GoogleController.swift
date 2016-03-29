@@ -31,7 +31,7 @@ class GoogleController: GPPSignInDelegate{
     }
     
     func getUserData(auth: GTMOAuth2Authentication){
-        var user = GPPSignIn.sharedInstance().googlePlusUser
+        let user = GPPSignIn.sharedInstance().googlePlusUser
         print(user.name.JSONString(), terminator: "")
     }
 }

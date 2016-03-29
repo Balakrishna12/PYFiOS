@@ -61,9 +61,6 @@ class UserImageDBController {
         
         let scanInput = AWSDynamoDBScanInput()
         
-//        scanInput.expressionAttributeNames = ["UserId" : condition]
-//        scanInput.expressionAttributeValues = ["UserId" : condition]
-        
         scanInput.scanFilter = ["UserId":condition]
         
         queryExpression.filterExpression = scanInput.filterExpression

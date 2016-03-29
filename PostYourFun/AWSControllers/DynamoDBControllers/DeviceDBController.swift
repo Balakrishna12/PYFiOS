@@ -51,9 +51,6 @@ class DeviceDBController {
         
         let scanInput = AWSDynamoDBScanInput()
         
-//        scanInput.expressionAttributeNames = ["DeviceId" : condition]
-//        scanInput.expressionAttributeValues = ["DeviceId" : condition]
-        
         scanInput.scanFilter = ["DeviceId":condition]
         
         queryExpression.filterExpression = scanInput.filterExpression

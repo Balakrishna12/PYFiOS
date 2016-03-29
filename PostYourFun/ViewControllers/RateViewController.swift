@@ -96,15 +96,15 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
     }
 
     func customTextFieldDidEndEditing(sender: AnyObject) {
-        var textField = sender as! CustomTextField
-        var index = textField.pickerIndex
+        let textField = sender as! CustomTextField
+        let index = textField.pickerIndex
         
         if parkSelector == textField
         {
             selectedDevices.removeAll()
             rideNames.removeAll()
             if index != nil{
-                var selectedPark = parks[index]
+                let selectedPark = parks[index]
                 for ride in self.rides{
                     if ride.ParkId == selectedPark.ParkId{
                         self.selectedDevices.append(ride)
@@ -121,15 +121,6 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
             rateLabel.text = rateLabelText + rideSelector.text! + " in " + parkSelector.text!
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     func setActions(){
         let fbShareTapGesture = UITapGestureRecognizer(target: self, action: #selector(RateViewController.shareWithFacebook(_:)))
@@ -166,9 +157,6 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
             let g_force = Int(self.gForceRating.rating)
             let adrenaline = Int(self.adrenalinRating.rating)
             //Share to Facebook
-            
-//            FacebookController().shareToFacebook(self, description: generalFbShareText + self.rideSelector.text + " in " + self.parkSelector.text +
-//                ". Speed " + String(speedRate) + "/5, G-Force " + String(g_force) + "/5 and Adrenaline kick " + String(adrenaline) + "/5." , parkName: self.parkSelector.text, parkUrl: self.selectedParkInfo.WebSite, imageUrl: self.selectedParkInfo.ImageUrl, placeId: self.selectedparkSocialInfo.Facebook)
             
             let description = generalFbShareText + self.rideSelector.text! + " in " + self.parkSelector.text! + ". Speed " + String(speedRate) + "/5, G-Force " + String(g_force) + "/5 and Adrenaline kick " + String(adrenaline) + "/5."
             

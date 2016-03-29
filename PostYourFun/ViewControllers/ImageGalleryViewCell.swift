@@ -15,15 +15,15 @@ protocol CellImageClickDelegate{
 
 class ImageGalleryViewCell: UICollectionViewCell {
     @IBOutlet weak var thumbImage: UIImageView!
-    @IBOutlet public weak var radioButton: UIButton!
+    @IBOutlet weak var radioButton: UIButton!
     
     var buttonDelegate: CellImageClickDelegate!
     
     func setActions(){
-        let imageTapGesture = UITapGestureRecognizer(target: self, action: "cellImageClicked:")
+        let imageTapGesture = UITapGestureRecognizer(target: self, action: #selector(ImageGalleryViewCell.cellImageClicked(_:)))
         thumbImage.addGestureRecognizer(imageTapGesture)
     
-        let radioTapGesture = UITapGestureRecognizer(target: self, action: "cellRadioClicked:")
+        let radioTapGesture = UITapGestureRecognizer(target: self, action: #selector(ImageGalleryViewCell.cellRadioClicked(_:)))
         radioButton.addGestureRecognizer(radioTapGesture)
         
         radioButton.selected = false

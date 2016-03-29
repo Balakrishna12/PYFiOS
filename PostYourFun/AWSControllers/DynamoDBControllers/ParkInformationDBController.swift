@@ -19,9 +19,9 @@ class ParkInformationDBController {
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
         let queryExpression = AWSDynamoDBScanExpression()
         
-        var condition = AWSDynamoDBCondition()
+        let condition = AWSDynamoDBCondition()
         condition.comparisonOperator = AWSDynamoDBComparisonOperator.EQ
-        var parkId = AWSDynamoDBAttributeValue()
+        let parkId = AWSDynamoDBAttributeValue()
         parkId.S = parkID
         
         condition.attributeValueList = [parkId]

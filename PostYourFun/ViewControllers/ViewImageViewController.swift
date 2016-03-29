@@ -35,11 +35,6 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         
         self.userImageDBController.aGetDataDelegate = self
         
-//        deviceDBController.aGetDataDelegate = self
-//        fbController.mDelegate = self
-//        imageDBController.aGetDataDelegate = self
-//        parkSocialDBController.aGetDataDelegate = self
-        
         userId = NSUserDefaults.standardUserDefaults().objectForKey(kUserId) as? String
     }
 
@@ -57,18 +52,6 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             self.selectedImagesArray.removeAll()
             
             for _ in self.userImages {
-                
-//                if let imageURL = image.ImageUrl {
-                
-//                   let downloader = SDWebImageDownloader.sharedDownloader()
-//                    
-//                    downloader.downloadImageWithURL(NSURL(string: imageURL), options: .ContinueInBackground, progress: { (progress, download) -> Void in
-//                        
-//                        }, completed: { (image, data, error, finished) -> Void in
-//                            
-//                            self.downloadFile(imageURL)
-//                    })
-//                }
                 
                 self.selectedImagesArray.append(false)
             }
@@ -104,44 +87,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             
             let image = self.userImages[self.selectedImageIndex]
             
-//            let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
-            
-//            let imagePath = image.ImageUrl!.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            
-//            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
-            
-//            let imageData = NSData.init(contentsOfURL: destinationUrl)
-            
-            
-            
-//            if imageData != nil {
-//                
-//                FacebookController().shareImageFileToFacebook(UIImage.init(data: imageData!)!, placeID: "", complition: { (connection, response, error) -> Void in
-//                    
-//                    if error == nil {
-//                        
-//                        let checkAlert = UIAlertController(title: "Success", message: "Image have been posted", preferredStyle: UIAlertControllerStyle.Alert)
-//                        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
-//                            
-//                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-//                        }))
-//                        self.presentViewController(checkAlert, animated: true, completion: nil)
-//                        
-//                    } else {
-//                        
-//                        let checkAlert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-//                        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
-//                            
-//                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-//                        }))
-//                        self.presentViewController(checkAlert, animated: true, completion: nil)
-//                    }
-//                })
-//                
-//            } else {
-            
-                fbController.shareImageToFacebook(self, thumbImage: image.ImageThumbUrl!, placeId: result.Facebook!, fullImage: image.ImageUrl!)
-//            }
+            fbController.shareImageToFacebook(self, thumbImage: image.ImageThumbUrl!, placeId: result.Facebook!, fullImage: image.ImageUrl!)
             
         }
     }
@@ -149,31 +95,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     
     
     func downloadFile(imageUrl: String) {
-        
-//        if let audioUrl = NSURL(string: imageUrl) {
-//            
-//            let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
-//            
-//            let imagePath = audioUrl.absoluteString.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-//            
-//            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
-//            print(destinationUrl, terminator: "")
-//            
-//            if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
-//                
-//                print("The file already exists at path", terminator: "")
-//            } else {
-//
-//                if let myAudioDataFromUrl = NSData(contentsOfURL: audioUrl){
-//                    
-//                    if myAudioDataFromUrl.writeToURL(destinationUrl, atomically: true) {
-//                        
-//                    } else {
-//                        
-//                    }
-//                }
-//            }
-//        }
+
     }
     
     
@@ -229,30 +151,6 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         self.selectedImagesArray[checkedPath.row] = true
         
         self.imageGallery.reloadData()
-        
-//        if flag == true {
-//            
-//            if selectedImageIndex != -1 {
-//                
-//                
-//            }
-//            
-////            for section in 0..<self.imageGallery.numberOfSections(){
-////                if section == checkedPath.section{
-////                    for row in 0..<self.imageGallery.numberOfItemsInSection(section){
-////                        let cellPath: NSIndexPath = NSIndexPath(forRow: row, inSection: section)
-////                        let cell = try self.imageGallery.cellForItemAtIndexPath(cellPath) as! ImageGalleryViewCell
-////                        if checkedPath.row != cellPath.row {
-////                            cell.unCheckRadio()
-////                        }
-////                    }
-////                }
-////            }
-//
-//        } else {
-//            
-//            selectedImageIndex = -1
-//        }
         
         selectedImageIndex = checkedPath.row
     }

@@ -292,11 +292,6 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             print("Buy image", terminator: "")
             
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            
-//            let confirmAlert = UIAlertController(title: "Share Image", message: "Share this image with Facebook", preferredStyle: UIAlertControllerStyle.Alert)
-            
-//            confirmAlert.addAction(UIAlertAction(title: "Share", style: .Default, handler: { (action: UIAlertAction) -> Void in
-//                print("Share image", terminator: "")
                 
                 var placeId = ""
                 
@@ -305,58 +300,9 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                         placeId = parkInfo.Facebook!
                     }
                 }
-                
-//                let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
             
-                let imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
-                
-//                imagePath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);
-            
-//                let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
-            
-//                let imageData = NSData.init(contentsOfURL: destinationUrl)
-            
-//                MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            
-//                if imageData != nil {
-//                    
-//                    FacebookController().shareImageFileToFacebook(UIImage.init(data: imageData!)!,placeID: placeId,complition: { (connection, response, error) -> Void in
-//                        
-//                        if error == nil {
-//                            
-//                            let checkAlert = UIAlertController(title: "Success", message: "Image have been posted", preferredStyle: UIAlertControllerStyle.Alert)
-//                            checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
-//                                
-//                                self.selectedImageView?.removeFromSuperview()
-//                                
-//                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-//                            }))
-//                            self.presentViewController(checkAlert, animated: true, completion: nil)
-//                            
-//                        } else {
-//                            
-//                            let checkAlert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-//                            checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
-//                                
-//                                self.selectedImageView?.removeFromSuperview()
-//                                
-//                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-//                            }))
-//                            self.presentViewController(checkAlert, animated: true, completion: nil)
-//                        }
-//                    })
-//                    
-//                } else {
-            
-                    FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
-//                }
-            
-//            }))
-//            confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) -> Void in
-//                print("Cancel share image", terminator: "")
-//            }))
-            
-//            presentViewController(confirmAlert, animated: true, completion: nil)
+            let imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
+            FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
         }
     }
     

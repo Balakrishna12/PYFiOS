@@ -12,13 +12,9 @@ import MBProgressHUD
 
 class LoginViewController: UIViewController, SocialControllerDelegate, AWSDynamoDBGetDataDelegate, AWSControllerDelegate{
 
-    @IBOutlet weak var loginWithFacebookButton: CustomSocialButton!    
-//    @IBOutlet weak var loginWithTwitterButton: CustomSocialButton!
-//    @IBOutlet weak var loginWithGoogleButton: CustomSocialButton!
+    @IBOutlet weak var loginWithFacebookButton: CustomSocialButton!
     
     var fbController = FacebookController()
-//    var twitterController = TwitterController()
-//    var googleController = GoogleController()
     
     var userDBController = UserDBController()
     var userFacebookDBController = UserFacebookDBController()
@@ -40,8 +36,6 @@ class LoginViewController: UIViewController, SocialControllerDelegate, AWSDynamo
         }
         
         fbController.mDelegate = self
-//        twitterController.mDelegate = self
-//        googleController.mDelegate = self
         
         userDBController.aDelegate = self
         userDBController.aGetDataDelegate = self
@@ -60,21 +54,7 @@ class LoginViewController: UIViewController, SocialControllerDelegate, AWSDynamo
     func setActions() {
         let fbTapGesture = UITapGestureRecognizer(target: self, action: "loginWithFacebook:")
         loginWithFacebookButton.addGestureRecognizer(fbTapGesture)
-        
-//        var twitterTapGesture = UITapGestureRecognizer(target: self, action: "loginWithTwitter:")
-//        loginWithTwitterButton.addGestureRecognizer(twitterTapGesture)
-//        
-//        var googleTapGesture = UITapGestureRecognizer(target: self, action: "loginWithGoogle:")
-//        loginWithGoogleButton.addGestureRecognizer(googleTapGesture)
     }
-    
-//    func loginWithTwitter(sender: AnyObject){
-//        twitterController.twitterLogIn()
-//    }
-//    
-//    func loginWithGoogle(sender: AnyObject){
-//        googleController.gPlusLogin()
-//    }
     
     func loginWithFacebook(sender: AnyObject) {
         fbController.fbLogin()
