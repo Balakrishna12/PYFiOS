@@ -138,12 +138,6 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
             
             self.presentViewController(controller, animated: true, completion: nil)
             
-//            self.gotImage = image[0]
-            
-//            let imageUrl = NSURL(string: IMAGE_CONSTANT_URL + image[0].Region! + IMAGE_THUMB_STRING + image[0].Name!)
-//            self.selectedImageName = image[0].Name!
-//            print(IMAGE_CONSTANT_URL + image[0].Region! + IMAGE_THUMB_STRING + image[0].Name!, terminator: "")
-//            self.selectedImage.sd_setImageWithURL(imageUrl)
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
         }
         if type == USERIMAGE_DB{
@@ -280,6 +274,13 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
             presentViewController(checkAlert, animated: true, completion: nil)
 
         }
+    }
+    
+    @IBAction func logout(sender: AnyObject) {
+        self.fbController.logout()
+        
+        let window = UIApplication.sharedApplication().delegate?.window
+        window!!.rootViewController = self.storyboard?.instantiateViewControllerWithIdentifier("loginViewController") as! LoginViewController
     }
     
     //PayPalPayment Delegate

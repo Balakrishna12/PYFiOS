@@ -81,10 +81,16 @@ class LoginViewController: UIViewController, SocialControllerDelegate, AWSDynamo
     }
     //Social Controller Delegate
     func onSuccess(type: Int, action: Int, userData: AnyObject) {
-        self.email = userData.objectForKey("email") as! String
+    
         self.facebookId = userData.objectForKey("id") as! String
         self.firstName = userData.objectForKey("first_name") as! String
         self.lastName = userData.objectForKey("last_name") as! String
+        
+        if userData.objectForKey("email") != nil {
+            self.email = userData.objectForKey("email") as! String
+        } else {
+            self.email = String.init(format: "\(self.facebookId)@facebook.com", "")
+        }
         
         var progressDg = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         
@@ -106,6 +112,7 @@ class LoginViewController: UIViewController, SocialControllerDelegate, AWSDynamo
         if type == FACEBOOK_USER_DB && datas.count > 0{
             let fbUser = datas[0] as! UserFacebookMapper
             NSUserDefaults.standardUserDefaults().setObject(fbUser.UserId, forKey: kUserId)
+            NSUserDefaults.standardUserDefaults().synchronize()
             gotoNext()
         }else if type == FACEBOOK_USER_DB && datas.count == 0{
             userDBController.getUsers()
@@ -118,11 +125,12 @@ class LoginViewController: UIViewController, SocialControllerDelegate, AWSDynamo
     //AWS Controller Delegate
     func onAWSTaskSuccess(type: Int) {
         if type == USER_DB{
-            self.delegateCount++
+            self.delegateCount += 1
             NSUserDefaults.standardUserDefaults().setObject(self.userId, forKey: kUserId)
+            NSUserDefaults.standardUserDefaults().synchronize()
         }
         if type == FACEBOOK_USER_DB{
-            self.delegateCount++
+            self.delegateCount += 1
         }
         if self.delegateCount == 2{
             self.delegateCount = 0

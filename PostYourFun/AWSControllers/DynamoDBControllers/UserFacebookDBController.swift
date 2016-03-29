@@ -40,11 +40,16 @@ class UserFacebookDBController {
             
             if task.result != nil {
                 let result = task.result as! AWSDynamoDBPaginatedOutput
-                for item in result.items as! [UserFacebookMapper]{
-                    self.fbUsers.append(item)
-                    print(item.FacebookId!)
+                for item in result.items as! [UserFacebookMapper] {
+                    
+                    if item.FacebookId == facebookId {
+                        
+                        self.fbUsers.append(item)
+                        print(item.FacebookId!)
+                    }
                 }
-                if self.aGetDataDelegate != nil{
+                
+                if self.aGetDataDelegate != nil {
                     self.aGetDataDelegate.onGetDataSuccess(self.fbUsers, type: FACEBOOK_USER_DB)
                 }
             }

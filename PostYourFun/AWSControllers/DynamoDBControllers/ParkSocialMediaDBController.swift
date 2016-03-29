@@ -24,7 +24,6 @@ class ParkSocialMediaDBcontroller {
             if task.result != nil {
                 let paginatedOutput = task.result as! AWSDynamoDBPaginatedOutput
                 for item in paginatedOutput.items as! [ParkSocialMediaMapper]{
-                    let parkId = item.ParkId!
                     self.parkSocialinfos.append(item)
                 }
                 if self.aGetDataDelegate != nil{
@@ -66,7 +65,10 @@ class ParkSocialMediaDBcontroller {
             if task.result != nil {
                 let result = task.result as! AWSDynamoDBPaginatedOutput
                 for item in result.items as! [ParkSocialMediaMapper]{
-                    self.parkSocialinfos.append(item)
+                    
+                    if item.ParkId == parkID {
+                        self.parkSocialinfos.append(item)
+                    }
                     print(item.Facebook!)
                 }
                 if self.aGetDataDelegate != nil{

@@ -132,7 +132,7 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
     */
 
     func setActions(){
-        let fbShareTapGesture = UITapGestureRecognizer(target: self, action: "shareWithFacebook:")
+        let fbShareTapGesture = UITapGestureRecognizer(target: self, action: #selector(RateViewController.shareWithFacebook(_:)))
         shareToFB.addGestureRecognizer(fbShareTapGesture)
     }
     
@@ -151,10 +151,10 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
     
     func onGetDataSuccess(datas: Array<AnyObject>!, type: Int) {
         if type == PARK_INFO_DB{
-            self.delegatecount++
+            self.delegatecount += 1
             self.selectedParkInfo = datas[0] as! ParkInformationMapper
         }else if type == PARK_SOCIAL_DB{
-            self.delegatecount++
+            self.delegatecount += 1
             self.selectedparkSocialInfo = datas[0] as! ParkSocialMediaMapper
         }
         

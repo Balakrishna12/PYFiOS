@@ -62,8 +62,11 @@ class DeviceDBController {
             
             if task.result != nil {
                 let result = task.result as! AWSDynamoDBPaginatedOutput
-                for item in result.items as! [DeviceMapper]{
-                    devices.append(item)
+                for item in result.items as! [DeviceMapper] {
+                    
+                    if item.DeviceId == deviceID {
+                        devices.append(item)
+                    }
                 }
                 if self.aGetDataDelegate != nil{
                     self.aGetDataDelegate.onGetDataSuccess(devices, type: DEVICE_DB)

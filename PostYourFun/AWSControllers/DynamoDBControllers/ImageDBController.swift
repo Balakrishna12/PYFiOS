@@ -38,8 +38,12 @@ class ImageDBController {
             if task.result != nil {
                 let result = task.result as! AWSDynamoDBPaginatedOutput
                 for item in result.items as! [ImageMapper] {
-                    self.image.append(item)
+                    
+                    if item.ImageId == imageID {
+                        self.image.append(item)
+                    }
                 }
+                
                 if self.aGetDataDelegate != nil{
                     self.aGetDataDelegate.onGetDataSuccess(self.image, type: IMAGE_DB)
                 }

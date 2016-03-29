@@ -115,12 +115,6 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         
         self.selectedImageName = image.Name
         self.gotImage = image
-    
-        
-//        let imageInfo = JTSImageInfo()
-//        imageInfo.imageURL = NSURL(string: IMAGE_CONSTANT_URL + image.Region! + IMAGE_THUMB_STRING + image.Name!)
-//        let imageViewer = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
-//        imageViewer.showFromViewController(self, transition: JTSImageViewControllerTransition.FromOriginalPosition)
         
         var frame = CGRectZero
 
@@ -132,7 +126,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         imageView.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
         imageView.userInteractionEnabled = true
         imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        imageView.addGestureRecognizer(UITapGestureRecognizer.init(target: imageView, action: "removeFromSuperview"))
+        imageView.addGestureRecognizer(UITapGestureRecognizer.init(target: imageView, action: #selector(UIView.removeFromSuperview)))
         
         imageView.sd_setImageWithURL(imageUrl);
         
@@ -149,7 +143,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         button.frame = frame
         button.setTitle("Download and Share", forState: UIControlState.Normal)
         button.backgroundColor = UIColor.init(red: 0, green: 122.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-        button.addTarget(self, action: "buyImage:", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: #selector(ImagesCollectionViewController.buyImage(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         imageView.addSubview(button)
         
@@ -262,6 +256,14 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             // check if it exists before downloading it
             if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
                 print("The file already exists at path", terminator: "")
+                let confirmAlert = UIAlertController(title: "Warning", message: "This image have been already bought", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) -> Void in
+                    confirmAlert.dismissViewControllerAnimated(true, completion: nil)
+                }))
+                
+                self.presentViewController(confirmAlert, animated: true, completion: nil)
+                    
 //                self.imageDownloadDelegate.downloadFailed()
                 self.downloadFailed()
             } else {
@@ -304,51 +306,51 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                     }
                 }
                 
-                let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
+//                let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
+            
+                let imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
                 
-                var imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
-                
-                imagePath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);
-                
-                let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
-                
-                let imageData = NSData.init(contentsOfURL: destinationUrl)
-                
-                MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                
-                if imageData != nil {
-                    
-                    FacebookController().shareImageFileToFacebook(UIImage.init(data: imageData!)!, complition: { (connection, response, error) -> Void in
-                        
-                        if error == nil {
-                            
-                            let checkAlert = UIAlertController(title: "Success", message: "Image have been posted", preferredStyle: UIAlertControllerStyle.Alert)
-                            checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                                
-                                self.selectedImageView?.removeFromSuperview()
-                                
-                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                            }))
-                            self.presentViewController(checkAlert, animated: true, completion: nil)
-                            
-                        } else {
-                            
-                            let checkAlert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-                            checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                                
-                                self.selectedImageView?.removeFromSuperview()
-                                
-                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                            }))
-                            self.presentViewController(checkAlert, animated: true, completion: nil)
-                        }
-                    })
-                    
-                } else {
-                    
-                    FacebookController().shareImageToFacebook(self, thumbImage: destinationUrl.absoluteString, placeId: "", fullImage: destinationUrl.absoluteString)
-                }
-                
+//                imagePath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil);
+            
+//                let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
+            
+//                let imageData = NSData.init(contentsOfURL: destinationUrl)
+            
+//                MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            
+//                if imageData != nil {
+//                    
+//                    FacebookController().shareImageFileToFacebook(UIImage.init(data: imageData!)!,placeID: placeId,complition: { (connection, response, error) -> Void in
+//                        
+//                        if error == nil {
+//                            
+//                            let checkAlert = UIAlertController(title: "Success", message: "Image have been posted", preferredStyle: UIAlertControllerStyle.Alert)
+//                            checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//                                
+//                                self.selectedImageView?.removeFromSuperview()
+//                                
+//                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+//                            }))
+//                            self.presentViewController(checkAlert, animated: true, completion: nil)
+//                            
+//                        } else {
+//                            
+//                            let checkAlert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+//                            checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//                                
+//                                self.selectedImageView?.removeFromSuperview()
+//                                
+//                                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+//                            }))
+//                            self.presentViewController(checkAlert, animated: true, completion: nil)
+//                        }
+//                    })
+//                    
+//                } else {
+            
+                    FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
+//                }
+            
 //            }))
 //            confirmAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction) -> Void in
 //                print("Cancel share image", terminator: "")

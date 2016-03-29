@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -114,7 +114,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Select your ride" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DvP-gZ-7pO" customClass="CustomTextField" customModule="PostYourFun" customModuleProvider="target">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Select your ride" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DvP-gZ-7pO" customClass="CustomTextField" customModule="PostYourFun" customModuleProvider="target">
                                                 <rect key="frame" x="28" y="109" width="358" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="JVK-71-fek"/>
@@ -122,7 +122,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdM-aQ-FZU">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdM-aQ-FZU">
                                                 <rect key="frame" x="28" y="149" width="358" height="51"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="51" id="yCy-Hu-Pmx"/>
@@ -131,7 +131,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Comment" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="swf-t9-mFp" customClass="CustomTextField" customModule="PostYourFun" customModuleProvider="target">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Comment" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="swf-t9-mFp" customClass="CustomTextField" customModule="PostYourFun" customModuleProvider="target">
                                                 <rect key="frame" x="28" y="204" width="358" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="c85-fc-Xyn"/>
@@ -139,7 +139,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Speed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUx-T5-UCt">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Speed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUx-T5-UCt">
                                                 <rect key="frame" x="28" y="262" width="50" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -166,7 +166,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fkr-dn-ffz" customClass="CustomRatingBar" customModule="PostYourFun" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fkr-dn-ffz" customClass="CustomRatingBar" customModule="PostYourFun" customModuleProvider="target">
                                                 <rect key="frame" x="220" y="262" width="166" height="21"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -183,7 +183,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJA-bp-tdY" customClass="CustomRatingBar" customModule="PostYourFun" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJA-bp-tdY" customClass="CustomRatingBar" customModule="PostYourFun" customModuleProvider="target">
                                                 <rect key="frame" x="220" y="311" width="166" height="21"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -200,7 +200,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Inv-JQ-GUl" customClass="CustomRatingBar" customModule="PostYourFun" customModuleProvider="target">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Inv-JQ-GUl" customClass="CustomRatingBar" customModule="PostYourFun" customModuleProvider="target">
                                                 <rect key="frame" x="220" y="360" width="166" height="21"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -217,7 +217,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="G-force" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IKR-OF-7VU">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="G-force" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IKR-OF-7VU">
                                                 <rect key="frame" x="28" y="311" width="59" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -462,8 +462,8 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5y3-oy-0wb">
-                                                <rect key="frame" x="28" y="181.5" width="358" height="40"/>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5y3-oy-0wb">
+                                                <rect key="frame" x="28" y="182" width="358" height="40"/>
                                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="7Yf-ek-WxX"/>
@@ -477,18 +477,36 @@
                                                     <action selector="getImage:" destination="LBB-t7-KLx" eventType="touchUpInside" id="wLt-th-vmg"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cnd-1a-Ldv">
+                                                <rect key="frame" x="28" y="450" width="358" height="40"/>
+                                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="5k4-lN-myG"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <state key="normal" title="LOGOUT">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="logout:" destination="LBB-t7-KLx" eventType="touchUpInside" id="1e2-3k-TfA"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="sBX-UQ-07v" firstAttribute="leading" secondItem="may-WT-viz" secondAttribute="leading" constant="28" id="0YA-VR-Hn1"/>
                                             <constraint firstAttribute="trailing" secondItem="C3D-QW-o6h" secondAttribute="trailing" constant="28" id="6dx-pL-11D"/>
                                             <constraint firstAttribute="trailing" secondItem="sBX-UQ-07v" secondAttribute="trailing" constant="28" id="8c8-Ke-Q7X"/>
+                                            <constraint firstItem="cnd-1a-Ldv" firstAttribute="leading" secondItem="5y3-oy-0wb" secondAttribute="leading" id="BCH-eY-Um3"/>
                                             <constraint firstItem="C3D-QW-o6h" firstAttribute="top" secondItem="GSD-EY-tRp" secondAttribute="bottom" constant="5" id="DKh-uU-Kad"/>
                                             <constraint firstItem="5y3-oy-0wb" firstAttribute="leading" secondItem="may-WT-viz" secondAttribute="leading" constant="28" id="GhF-OW-Tub"/>
                                             <constraint firstAttribute="height" constant="500" id="Jhy-AF-Ugp"/>
                                             <constraint firstAttribute="trailing" secondItem="5y3-oy-0wb" secondAttribute="trailing" constant="28" id="NB3-f1-re9"/>
                                             <constraint firstAttribute="trailing" secondItem="GSD-EY-tRp" secondAttribute="trailing" constant="28" id="P7V-cu-S4A"/>
+                                            <constraint firstAttribute="bottom" secondItem="cnd-1a-Ldv" secondAttribute="bottom" constant="10" id="RNh-Af-N5d"/>
                                             <constraint firstItem="DMs-CU-Aw8" firstAttribute="leading" secondItem="may-WT-viz" secondAttribute="leading" constant="28" id="cKB-us-wzi"/>
+                                            <constraint firstItem="cnd-1a-Ldv" firstAttribute="trailing" secondItem="5y3-oy-0wb" secondAttribute="trailing" id="d9c-Ro-48M"/>
                                             <constraint firstItem="GSD-EY-tRp" firstAttribute="leading" secondItem="may-WT-viz" secondAttribute="leading" constant="28" id="gJH-2U-4sk"/>
                                             <constraint firstItem="GSD-EY-tRp" firstAttribute="top" secondItem="may-WT-viz" secondAttribute="top" constant="8" id="h24-Od-8dX"/>
                                             <constraint firstItem="sBX-UQ-07v" firstAttribute="top" secondItem="C3D-QW-o6h" secondAttribute="bottom" constant="10.5" id="iF1-t5-USj"/>

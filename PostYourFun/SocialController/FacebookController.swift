@@ -23,6 +23,8 @@ class FacebookController {
         
         let fbLoginManager = FBSDKLoginManager()
         
+        fbLoginManager.logOut()
+        
         fbLoginManager.logInWithPublishPermissions(["publish_actions"]) { (result, error) -> Void in
         
 //            fbLoginManager.logInWithReadPermissions(["email"], handler: {(result, error) -> Void in
@@ -39,6 +41,11 @@ class FacebookController {
 //                }
 //            })
         }
+    }
+    
+    
+    func logout() {
+        FBSDKLoginManager().logOut()
     }
     
     func getFBUserData() {
@@ -83,22 +90,22 @@ class FacebookController {
     }
     
     
-    func shareImageFileToFacebook(image: UIImage, complition: FBSDKGraphRequestHandler!) {
-        
-        if FBSDKAccessToken.currentAccessToken().hasGranted("publish_actions") {
-            
-            FBSDKGraphRequest.init(graphPath: "me/photos", parameters: ["picture" : UIImageJPEGRepresentation(image, 1.0)!], HTTPMethod: "POST").startWithCompletionHandler { (connection:  FBSDKGraphRequestConnection!, object: AnyObject!, error: NSError!) -> Void in
-                complition(connection, object, error)
-            }
-        } else {
-            
-            FBSDKLoginManager().logInWithPublishPermissions(["publish_actions"]) { (result, error) -> Void in
-                if error == nil {
-                    self.shareImageFileToFacebook(image, complition: complition)
-                } else {
-                    UIAlertView.init(title: "Error", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
-                }
-            }
-        }
-    }
+//    func shareImageFileToFacebook(image: UIImage, placeID: String, complition: FBSDKGraphRequestHandler!) {
+//        
+//        if FBSDKAccessToken.currentAccessToken().hasGranted("publish_actions") {
+//            
+//            FBSDKGraphRequest.init(graphPath: "me/photos", parameters: ["picture" : UIImageJPEGRepresentation(image, 1.0)!, "placeID": placeID], HTTPMethod: "POST").startWithCompletionHandler { (connection:  FBSDKGraphRequestConnection!, object: AnyObject!, error: NSError!) -> Void in
+//                complition(connection, object, error)
+//            }
+//        } else {
+//            
+//            FBSDKLoginManager().logInWithPublishPermissions(["publish_actions"]) { (result, error) -> Void in
+//                if error == nil {
+//                    self.shareImageFileToFacebook(image, placeID: placeID , complition: complition)
+//                } else {
+//                    UIAlertView.init(title: "Error", message: error.localizedDescription, delegate: nil, cancelButtonTitle: "OK").show()
+//                }
+//            }
+//        }
+//    }
 }

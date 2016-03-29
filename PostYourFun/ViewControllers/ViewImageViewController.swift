@@ -33,11 +33,12 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         
         super.viewDidLoad()
         
-        userImageDBController.aGetDataDelegate = self
-        deviceDBController.aGetDataDelegate = self
-        fbController.mDelegate = self
-        imageDBController.aGetDataDelegate = self
-        parkSocialDBController.aGetDataDelegate = self
+        self.userImageDBController.aGetDataDelegate = self
+        
+//        deviceDBController.aGetDataDelegate = self
+//        fbController.mDelegate = self
+//        imageDBController.aGetDataDelegate = self
+//        parkSocialDBController.aGetDataDelegate = self
         
         userId = NSUserDefaults.standardUserDefaults().objectForKey(kUserId) as? String
     }
@@ -55,35 +56,45 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             
             self.selectedImagesArray.removeAll()
             
-            for image in self.userImages {
+            for _ in self.userImages {
                 
-                if let imageURL = image.ImageUrl {
+//                if let imageURL = image.ImageUrl {
                 
-                   let downloader = SDWebImageDownloader.sharedDownloader()
-                    
-                    downloader.downloadImageWithURL(NSURL(string: imageURL), options: .ContinueInBackground, progress: { (progress, download) -> Void in
-                        
-                        }, completed: { (image, data, error, finished) -> Void in
-                            
-                            self.downloadFile(imageURL)
-                            
-                    })
-                }
+//                   let downloader = SDWebImageDownloader.sharedDownloader()
+//                    
+//                    downloader.downloadImageWithURL(NSURL(string: imageURL), options: .ContinueInBackground, progress: { (progress, download) -> Void in
+//                        
+//                        }, completed: { (image, data, error, finished) -> Void in
+//                            
+//                            self.downloadFile(imageURL)
+//                    })
+//                }
                 
                 self.selectedImagesArray.append(false)
             }
             
             self.imageGallery.reloadData()
         }
-        if type == IMAGE_DB{
+        if type == IMAGE_DB {
             var images = datas as! Array<ImageMapper>
             let image = images[0]
-            deviceDBController.getDevice(image.DeviceId!)
+            self.deviceDBController.aGetDataDelegate = self
+            self.deviceDBController.getDevice(image.DeviceId!)
         }
         if type == DEVICE_DB{
             var devices = datas as! Array<DeviceMapper>
-            let device = devices[0]
-            parkSocialDBController.getParkSocialMediaInfo(device.ParkId!)
+            
+            if devices.count > 0 {
+                
+                let device = devices[0]
+                self.parkSocialDBController.aGetDataDelegate = self
+                parkSocialDBController.getParkSocialMediaInfo(device.ParkId!)
+                
+            } else {
+                
+                self.parkSocialDBController.aGetDataDelegate = self
+                parkSocialDBController.getAllParkSocialInfos()
+            }
         }
         if type == PARK_SOCIAL_DB {
             var results = datas as! Array<ParkSocialMediaMapper>
@@ -93,42 +104,44 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             
             let image = self.userImages[self.selectedImageIndex]
             
-            let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
+//            let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
             
-            let imagePath = image.ImageUrl!.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+//            let imagePath = image.ImageUrl!.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             
-            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
+//            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
             
-            let imageData = NSData.init(contentsOfURL: destinationUrl)
+//            let imageData = NSData.init(contentsOfURL: destinationUrl)
             
-            if imageData != nil {
-                
-                FacebookController().shareImageFileToFacebook(UIImage.init(data: imageData!)!, complition: { (connection, response, error) -> Void in
-                    
-                    if error == nil {
-                        
-                        let checkAlert = UIAlertController(title: "Success", message: "Image have been posted", preferredStyle: UIAlertControllerStyle.Alert)
-                        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                            
-                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                        }))
-                        self.presentViewController(checkAlert, animated: true, completion: nil)
-                        
-                    } else {
-                        
-                        let checkAlert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
-                        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
-                            
-                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                        }))
-                        self.presentViewController(checkAlert, animated: true, completion: nil)
-                    }
-                })
-                
-            } else {
-                
-                fbController.shareImageToFacebook(self, thumbImage: self.userImages[selectedImageIndex].ImageThumbUrl!, placeId: result.Facebook!, fullImage: self.userImages[selectedImageIndex].ImageUrl!)
-            }
+            
+            
+//            if imageData != nil {
+//                
+//                FacebookController().shareImageFileToFacebook(UIImage.init(data: imageData!)!, placeID: "", complition: { (connection, response, error) -> Void in
+//                    
+//                    if error == nil {
+//                        
+//                        let checkAlert = UIAlertController(title: "Success", message: "Image have been posted", preferredStyle: UIAlertControllerStyle.Alert)
+//                        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//                            
+//                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+//                        }))
+//                        self.presentViewController(checkAlert, animated: true, completion: nil)
+//                        
+//                    } else {
+//                        
+//                        let checkAlert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+//                        checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
+//                            
+//                            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+//                        }))
+//                        self.presentViewController(checkAlert, animated: true, completion: nil)
+//                    }
+//                })
+//                
+//            } else {
+            
+                fbController.shareImageToFacebook(self, thumbImage: image.ImageThumbUrl!, placeId: result.Facebook!, fullImage: image.ImageUrl!)
+//            }
             
         }
     }
@@ -137,30 +150,30 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     
     func downloadFile(imageUrl: String) {
         
-        if let audioUrl = NSURL(string: imageUrl) {
-            
-            let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
-            
-            let imagePath = audioUrl.absoluteString.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
-            
-            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
-            print(destinationUrl, terminator: "")
-            
-            if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
-                
-                print("The file already exists at path", terminator: "")
-            } else {
-
-                if let myAudioDataFromUrl = NSData(contentsOfURL: audioUrl){
-                    
-                    if myAudioDataFromUrl.writeToURL(destinationUrl, atomically: true) {
-                        
-                    } else {
-                        
-                    }
-                }
-            }
-        }
+//        if let audioUrl = NSURL(string: imageUrl) {
+//            
+//            let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first
+//            
+//            let imagePath = audioUrl.absoluteString.stringByReplacingOccurrencesOfString("/", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+//            
+//            let destinationUrl = documentsUrl!.URLByAppendingPathComponent(imagePath)
+//            print(destinationUrl, terminator: "")
+//            
+//            if NSFileManager().fileExistsAtPath(destinationUrl.path!) {
+//                
+//                print("The file already exists at path", terminator: "")
+//            } else {
+//
+//                if let myAudioDataFromUrl = NSData(contentsOfURL: audioUrl){
+//                    
+//                    if myAudioDataFromUrl.writeToURL(destinationUrl, atomically: true) {
+//                        
+//                    } else {
+//                        
+//                    }
+//                }
+//            }
+//        }
     }
     
     
@@ -262,6 +275,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             print("Share image on Facebook", terminator: "")
             // Share Image on Facebook
             MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            self.imageDBController.aGetDataDelegate = self
             self.imageDBController.getImage(self.userImages[selectedImageIndex].ImageId)
         }
     }
