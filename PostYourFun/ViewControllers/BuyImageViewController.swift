@@ -120,9 +120,9 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
         }
         
         if type == IMAGEQUERY_DB {
-            var image = datas as! Array<ImageQueryMapper>
+            let image = datas as! Array<ImageQueryMapper>
             if image.count > 0 {
-                self.imageDBController.getImage(image[0].ImageId)
+                self.imageDBController.getImages()
             }
         }
         if type == IMAGE_DB {
@@ -277,6 +277,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
     }
     
     @IBAction func logout(sender: AnyObject) {
+        
         self.fbController.logout()
         
         let window = UIApplication.sharedApplication().delegate?.window

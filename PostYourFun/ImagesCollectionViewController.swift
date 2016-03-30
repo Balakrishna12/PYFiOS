@@ -184,7 +184,8 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             if (freeDownload){
                 MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 self.selectedImageUrl = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
-                downloadFile(self.selectedImageUrl)
+                self.downloadSuccess()
+//                downloadFile(self.selectedImageUrl)
             }else{
                 MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 if (!payment.processable) {

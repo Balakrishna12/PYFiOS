@@ -41,6 +41,8 @@ class FacebookController {
     
     func logout() {
         FBSDKLoginManager().logOut()
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(kUserId)
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     func getFBUserData() {

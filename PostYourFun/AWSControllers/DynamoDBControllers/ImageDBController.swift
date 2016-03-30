@@ -14,7 +14,7 @@ class ImageDBController {
     var aGetDataDelegate: AWSDynamoDBGetDataDelegate!
     var image = Array<ImageMapper>()
     
-    func getImage(imageID: String!){
+    func getImage(imageID: String!) {
         self.image.removeAll()
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
         let queryExpression = AWSDynamoDBScanExpression()
@@ -52,6 +52,41 @@ class ImageDBController {
             }
             return nil
         })
-
+    }
+    
+    func getImages() {
+        self.image.removeAll()
+        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
+        let queryExpression = AWSDynamoDBScanExpression()
+        
+        let condition = AWSDynamoDBCondition()
+        condition.comparisonOperator = AWSDynamoDBComparisonOperator.EQ
+        let imageId = AWSDynamoDBAttributeValue()
+        
+        condition.attributeValueList = [imageId]
+        
+        let scanInput = AWSDynamoDBScanInput()
+        
+        scanInput.expressionAttributeValues = ["ImageId" : condition]
+        
+        queryExpression.filterExpression = scanInput.filterExpression
+        
+        dynamoDBObjectMapper.scan(ImageMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
+            
+            if task.result != nil {
+                let result = task.result as! AWSDynamoDBPaginatedOutput
+                for item in result.items as! [ImageMapper] {
+                    self.image.append(item);
+                }
+                
+                if self.aGetDataDelegate != nil{
+                    self.aGetDataDelegate.onGetDataSuccess(self.image, type: IMAGE_DB)
+                }
+            }
+            if ((task.error) != nil) {
+                print("Error: \(task.error)")
+            }
+            return nil
+        })
     }
 }
