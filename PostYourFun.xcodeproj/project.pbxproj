@@ -12,8 +12,8 @@
 		745B4E611B78CBF8000783C3 /* ImageGalleryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B4E601B78CBF8000783C3 /* ImageGalleryViewCell.swift */; };
 		7505BBD41C49048D0047DF34 /* ImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7505BBD31C49048D0047DF34 /* ImagesCollectionViewController.swift */; };
 		7505BBD71C4907900047DF34 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7505BBD61C4907900047DF34 /* ImageCollectionCell.swift */; };
-		7505BBD91C4908640047DF34 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7505BBD81C4908640047DF34 /* 1.png */; };
 		7505BBF91C491C8F0047DF34 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7505BBF81C491C8F0047DF34 /* ImagePreviewViewController.swift */; };
+		752A05C81CAD3A7A009AB8F7 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 752A05C71CAD3A7A009AB8F7 /* logo.png */; };
 		DAE66621CBA2CE8B838A9D8A /* Pods_PostYourFun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67027543B97D0590AE303D08 /* Pods_PostYourFun.framework */; };
 		E24F22D31B63D3A60023FD41 /* UserMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F22D21B63D3A60023FD41 /* UserMapper.swift */; };
 		E24F22D51B63D8BA0023FD41 /* UserFacebookDetailsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24F22D41B63D8BA0023FD41 /* UserFacebookDetailsMapper.swift */; };
@@ -53,7 +53,6 @@
 		E28C53E61B5D4A0300CFBD74 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28C53E41B5D4A0300CFBD74 /* Main.storyboard */; };
 		E28C53E81B5D4A0300CFBD74 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E28C53E71B5D4A0300CFBD74 /* Images.xcassets */; };
 		E28C53EB1B5D4A0300CFBD74 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E28C53E91B5D4A0300CFBD74 /* LaunchScreen.xib */; };
-		E28C54031B5D502200CFBD74 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E28C54011B5D502200CFBD74 /* logo.png */; };
 		E28C54041B5D502200CFBD74 /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = E28C54021B5D502200CFBD74 /* splash.png */; };
 		E28C54071B5D5A5300CFBD74 /* CustomSocialButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E28C54061B5D5A5300CFBD74 /* CustomSocialButton.xib */; };
 		E28C540E1B5D5AAE00CFBD74 /* Socialico Plus.otf in Resources */ = {isa = PBXBuildFile; fileRef = E28C540A1B5D5AAE00CFBD74 /* Socialico Plus.otf */; };
@@ -77,8 +76,8 @@
 		745B4E601B78CBF8000783C3 /* ImageGalleryViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageGalleryViewCell.swift; path = ViewControllers/ImageGalleryViewCell.swift; sourceTree = "<group>"; };
 		7505BBD31C49048D0047DF34 /* ImagesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewController.swift; sourceTree = "<group>"; };
 		7505BBD61C4907900047DF34 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionCell.swift; sourceTree = "<group>"; };
-		7505BBD81C4908640047DF34 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 1.png; path = Images.xcassets/AppIcon.appiconset/1.png; sourceTree = "<group>"; };
 		7505BBF81C491C8F0047DF34 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
+		752A05C71CAD3A7A009AB8F7 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		C8F52B915E4D2127AC848EBB /* Pods-PostYourFun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostYourFun.release.xcconfig"; path = "Pods/Target Support Files/Pods-PostYourFun/Pods-PostYourFun.release.xcconfig"; sourceTree = "<group>"; };
 		E24F22D21B63D3A60023FD41 /* UserMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserMapper.swift; path = AWSControllers/DynamoDBModels/UserMapper.swift; sourceTree = "<group>"; };
 		E24F22D41B63D8BA0023FD41 /* UserFacebookDetailsMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserFacebookDetailsMapper.swift; path = AWSControllers/DynamoDBModels/UserFacebookDetailsMapper.swift; sourceTree = "<group>"; };
@@ -121,7 +120,6 @@
 		E28C53E51B5D4A0300CFBD74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E28C53E71B5D4A0300CFBD74 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E28C53EA1B5D4A0300CFBD74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		E28C54011B5D502200CFBD74 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		E28C54021B5D502200CFBD74 /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		E28C54061B5D5A5300CFBD74 /* CustomSocialButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomSocialButton.xib; path = CustomUIs/CustomSocialButton/CustomSocialButton.xib; sourceTree = "<group>"; };
 		E28C540A1B5D5AAE00CFBD74 /* Socialico Plus.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Socialico Plus.otf"; sourceTree = "<group>"; };
@@ -161,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				7505BBD61C4907900047DF34 /* ImageCollectionCell.swift */,
-				7505BBD81C4908640047DF34 /* 1.png */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -301,7 +298,7 @@
 			children = (
 				E26A5C3B1B67D74D001E8EEF /* btn_star_a.png */,
 				E26A5C3C1B67D74D001E8EEF /* btn_star_b.png */,
-				E28C54011B5D502200CFBD74 /* logo.png */,
+				752A05C71CAD3A7A009AB8F7 /* logo.png */,
 				E28C54021B5D502200CFBD74 /* splash.png */,
 			);
 			path = Images;
@@ -444,12 +441,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E28C540F1B5D5AAE00CFBD74 /* Socialico Plus.ttf in Resources */,
-				E28C54031B5D502200CFBD74 /* logo.png in Resources */,
 				E28C540E1B5D5AAE00CFBD74 /* Socialico Plus.otf in Resources */,
+				752A05C81CAD3A7A009AB8F7 /* logo.png in Resources */,
 				E28C54101B5D5AAE00CFBD74 /* Socialico.otf in Resources */,
 				E26A5C3D1B67D74D001E8EEF /* btn_star_a.png in Resources */,
 				E28C53E61B5D4A0300CFBD74 /* Main.storyboard in Resources */,
-				7505BBD91C4908640047DF34 /* 1.png in Resources */,
 				E28C53EB1B5D4A0300CFBD74 /* LaunchScreen.xib in Resources */,
 				E26A5C3E1B67D74D001E8EEF /* btn_star_b.png in Resources */,
 				E28C53E81B5D4A0300CFBD74 /* Images.xcassets in Resources */,

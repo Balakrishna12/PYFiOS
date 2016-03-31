@@ -303,6 +303,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                 }
             
             let imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
+            
             FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
         }
     }

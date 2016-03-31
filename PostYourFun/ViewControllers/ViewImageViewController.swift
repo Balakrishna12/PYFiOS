@@ -80,6 +80,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             }
         }
         if type == PARK_SOCIAL_DB {
+            
             var results = datas as! Array<ParkSocialMediaMapper>
             let result = results[0]
             

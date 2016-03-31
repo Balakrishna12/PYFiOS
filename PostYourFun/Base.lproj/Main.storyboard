@@ -826,7 +826,7 @@
     <resources>
         <image name="btn_star_a.png" width="144" height="144"/>
         <image name="btn_star_b.png" width="145" height="144"/>
-        <image name="logo.png" width="611" height="146"/>
+        <image name="logo.png" width="479" height="116"/>
         <image name="radio_off" width="24" height="24"/>
         <image name="radio_on" width="24" height="24"/>
         <image name="splash.png" width="551" height="710"/>
