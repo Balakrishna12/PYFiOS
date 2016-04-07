@@ -22,7 +22,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
     @IBOutlet weak var btnGetImage: UIButton!
     @IBOutlet weak var selectedImage: UIImageView!
     @IBOutlet weak var btnBuyImage: UIButton!
-    @IBOutlet weak var lblImagePrice: UILabel!
+    //@IBOutlet weak var lblImagePrice: UILabel!
     
     var parks: Array<ParkMapper>!
     var rides: Array<DeviceMapper>!
@@ -206,10 +206,10 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
                 self.selectedParkId = self.parks[index].ParkId
                 self.selectedDevice = self.selectedDevices[0]
                 if (selectedPark.AllInclusive == 1) {
-                    self.lblImagePrice.text = ""
+                    //self.lblImagePrice.text = ""
                     self.freeDownload = true
                 } else{
-                    self.lblImagePrice.text = "8 EUR for full quality image"
+                    //self.lblImagePrice.text = "8 EUR for full quality image"
                     self.freeDownload = false
                 }
             }
