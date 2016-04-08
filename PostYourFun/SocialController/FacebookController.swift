@@ -86,4 +86,25 @@ class FacebookController {
         FBSDKShareDialog.showFromViewController(viewController, withContent: shareLink, delegate: nil)
     }
     
+    
+    func shareImage(viewController: UIViewController, sharedImage: UIImage?) {
+        
+        let sharePhoto: FBSDKSharePhoto = FBSDKSharePhoto()
+        
+        sharePhoto.image = sharedImage
+        sharePhoto.caption = "Post Your Fun Image Share"
+        sharePhoto.userGenerated = true
+        
+        let content = FBSDKSharePhotoContent()
+        content.photos = [ sharePhoto ]
+
+        
+        
+        //FBSDKShareAPI.shareWithContent(content, delegate: nil)
+        
+        FBSDKShareDialog.showFromViewController(viewController, withContent: content, delegate: nil)
+        
+        
+    }
+    
 }

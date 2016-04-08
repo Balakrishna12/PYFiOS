@@ -12,6 +12,8 @@ import JTSImageViewController
 import FBSDKCoreKit
 import FBSDKLoginKit
 import FBSDKShareKit
+import SDWebImage
+import AssetsLibrary
 
 
 protocol ImageDownloadDelegate{
@@ -38,6 +40,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
     var selectedImageName: String!
     var gotImage: ImageMapper!
     var selectedImageUrl: String!
+    var selectedImageIndex: Int!
     
     var config = PayPalConfiguration()
     
@@ -63,6 +66,33 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         userImageDBController.aGetDataDelegate = self
         userImageDBController.aDelegate = self
         userImageDBController.readTransactions(self.userID)
+    }
+    
+    
+    func saveToTemporaryFileWithImageURL(imageURL: NSURL!) -> Void {
+    
+        let imageView: UIImageView = UIImageView()
+        
+        imageView.sd_setImageWithURL(imageURL, completed: {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL?) in
+            
+            if (image != nil) {
+                
+                if let data = UIImagePNGRepresentation(image!) {
+                    
+                    let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
+                    let writePath = document.stringByAppendingString(self.gotImage.Name!)
+                    
+                    data.writeToFile(writePath, atomically: true)
+                    
+//                    do {
+//                        try data.writeToFile(writePath, atomically: true)
+//                    } catch {
+//                    }
+  
+                }
+            }
+        })
+        
     }
     
     func onGetDataSuccess(datas: Array<AnyObject>!, type: Int) {
@@ -108,6 +138,8 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+        
+        selectedImageIndex = indexPath.row
         
         let image = self.imagesArray[indexPath.row] as! ImageMapper
         
@@ -181,6 +213,13 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             presentViewController(checkAlert, animated: true, completion: nil)
             
         } else if (!self.userImageUrls.contains((IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!))) {
+            
+            let savedImage = self.imagesArray[selectedImageIndex] as! ImageMapper
+            
+            let savedImageURL = NSURL(string: IMAGE_CONSTANT_URL + savedImage.Region! + IMAGE_THUMB_STRING + savedImage.Name!)
+            
+            self.saveToTemporaryFileWithImageURL(savedImageURL)
+            
             if (freeDownload){
                 MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 self.selectedImageUrl = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
@@ -229,6 +268,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         
         downloadFile(IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!)
     }
+  
     func downloadSuccess() {
         print("file saved", terminator: "")
         let imageUrl = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
@@ -303,6 +343,15 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                 }
             
             let imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
+            
+            let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            let writePath = document.stringByAppendingString(self.gotImage.Name!)
+            
+            let image = UIImage(contentsOfFile: writePath)
+            
+            print("PICTURE - %@", image )
+            
+            //FacebookController().shareImage(self, sharedImage: UIImage(named: "shareImage") )
             
             FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
         }

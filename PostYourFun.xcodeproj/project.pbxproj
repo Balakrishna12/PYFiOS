@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		449768CF1CB67D91000D613F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 449768CE1CB67D91000D613F /* AssetsLibrary.framework */; };
 		7438BF8B1B72B45800992AD2 /* DeviceDBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438BF891B72B45800992AD2 /* DeviceDBController.swift */; };
 		7438BF8C1B72B45800992AD2 /* UserImageDBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438BF8A1B72B45800992AD2 /* UserImageDBController.swift */; };
 		745B4E611B78CBF8000783C3 /* ImageGalleryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B4E601B78CBF8000783C3 /* ImageGalleryViewCell.swift */; };
@@ -68,6 +69,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		449768CE1CB67D91000D613F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		67027543B97D0590AE303D08 /* Pods_PostYourFun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PostYourFun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE0EB630E818F41A59FE978 /* Pods-PostYourFun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostYourFun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PostYourFun/Pods-PostYourFun.debug.xcconfig"; sourceTree = "<group>"; };
 		7438BF891B72B45800992AD2 /* DeviceDBController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceDBController.swift; path = AWSControllers/DynamoDBControllers/DeviceDBController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				449768CF1CB67D91000D613F /* AssetsLibrary.framework in Frameworks */,
 				DAE66621CBA2CE8B838A9D8A /* Pods_PostYourFun.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -166,6 +169,7 @@
 		91420CBABEC4FA1F28FB824D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				449768CE1CB67D91000D613F /* AssetsLibrary.framework */,
 				7438BF961B72EAF100992AD2 /* libsqlite3.dylib */,
 				67027543B97D0590AE303D08 /* Pods_PostYourFun.framework */,
 			);
