@@ -29,16 +29,16 @@ class FacebookController {
             
             if error == nil {
                 let fbLoginResult: FBSDKLoginManagerLoginResult = result
-                    if self.mDelegate != nil
-                    {
-                        self.credentialProvider.logins = ["graph.facebook.com": fbLoginResult.token.tokenString]
-                        self.getFBUserData()
-                    }
+                if self.mDelegate != nil
+                {
+                    self.credentialProvider.logins = ["graph.facebook.com": fbLoginResult.token.tokenString]
+                    self.getFBUserData()
                 }
+            }
         }
     }
     
-    
+
     func logout() {
         FBSDKLoginManager().logOut()
         NSUserDefaults.standardUserDefaults().removeObjectForKey(kUserId)
@@ -87,24 +87,32 @@ class FacebookController {
     }
     
     
-    func shareImage(viewController: UIViewController, sharedImage: UIImage?) {
-        
-        let sharePhoto: FBSDKSharePhoto = FBSDKSharePhoto()
-        
-        sharePhoto.image = sharedImage
-        sharePhoto.caption = "Post Your Fun Image Share"
-        sharePhoto.userGenerated = true
-        
-        let content = FBSDKSharePhotoContent()
-        content.photos = [ sharePhoto ]
-
-        
-        
-        //FBSDKShareAPI.shareWithContent(content, delegate: nil)
-        
-        FBSDKShareDialog.showFromViewController(viewController, withContent: content, delegate: nil)
-        
-        
-    }
+//    func shareImage(viewController: UIViewController, sharedImage: UIImage?) {
+//        
+//        
+//        let sharePhoto: FBSDKSharePhoto = FBSDKSharePhoto()
+//        sharePhoto.image = sharedImage
+//        sharePhoto.caption = "Post Your Fun Image Share"
+//        sharePhoto.userGenerated = true
+//        
+//        let content = FBSDKSharePhotoContent()
+//        content.photos = [ sharePhoto ]
+//        content.contentURL = NSURL(string: "")
+//        
+//        let dialog = FBSDKShareDialog()
+//        dialog.delegate = nil
+//        dialog.shareContent = content
+//        
+//        dialog.mode = FBSDKShareDialogMode.ShareSheet
+//        
+//        dialog.show()
+//        
+//        //FBSDKShareAPI.shareWithContent(content, delegate: nil)
+//
+//        //FBSDKShareDialog.showFromViewController(viewController, withContent: content, delegate: nil)
+//
+//        
+//    }
     
 }
+

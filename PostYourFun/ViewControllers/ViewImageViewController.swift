@@ -88,6 +88,16 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             
             let image = self.userImages[self.selectedImageIndex]
             
+//            let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+//            let writePath = document.stringByAppendingString("/" + image.ImageId! + ".JPG")
+//            
+//            if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
+//                print("There is such photo in library")
+//            } else {
+//                print("There is not such photo in library")
+//            }
+            
+            
             fbController.shareImageToFacebook(self, thumbImage: image.ImageThumbUrl!, placeId: result.Facebook!, fullImage: image.ImageUrl!)
             
         }

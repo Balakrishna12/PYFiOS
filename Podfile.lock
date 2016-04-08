@@ -1,77 +1,70 @@
 PODS:
-  - Alamofire (3.1.4)
-  - AWSAutoScaling (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSCloudWatch (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSCognito (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSCore (2.3.3)
-  - AWSDynamoDB (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSEC2 (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSElasticLoadBalancing (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSKinesis (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSLambda (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSMachineLearning (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSMobileAnalytics (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSS3 (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSSES (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSSimpleDB (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSSNS (2.3.3):
-    - AWSCore (= 2.3.3)
-  - AWSSQS (2.3.3):
-    - AWSCore (= 2.3.3)
-  - Bolts (1.6.0):
-    - Bolts/AppLinks (= 1.6.0)
-    - Bolts/Tasks (= 1.6.0)
-  - Bolts/AppLinks (1.6.0):
+  - Alamofire (3.3.1)
+  - AWSAutoScaling (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSCloudWatch (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSCognito (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSCore (2.3.6)
+  - AWSDynamoDB (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSEC2 (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSElasticLoadBalancing (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSKinesis (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSLambda (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSMachineLearning (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSMobileAnalytics (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSS3 (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSSES (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSSimpleDB (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSSNS (2.3.6):
+    - AWSCore (= 2.3.6)
+  - AWSSQS (2.3.6):
+    - AWSCore (= 2.3.6)
+  - Bolts (1.7.0):
+    - Bolts/AppLinks (= 1.7.0)
+    - Bolts/Tasks (= 1.7.0)
+  - Bolts/AppLinks (1.7.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.6.0)
-  - CardIO (5.2.2)
-  - Fabric (1.6.2)
-  - FBSDKCoreKit (4.8.0):
-    - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc (= 4.8.0)
-    - FBSDKCoreKit/no-arc (= 4.8.0)
-  - FBSDKCoreKit/arc (4.8.0):
-    - Bolts (~> 1.1)
-  - FBSDKCoreKit/no-arc (4.8.0):
-    - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc
-  - FBSDKLoginKit (4.8.0):
+  - Bolts/Tasks (1.7.0)
+  - CardIO (5.3.1)
+  - Fabric (1.6.7)
+  - FBSDKCoreKit (4.10.1):
+    - Bolts (~> 1.5)
+  - FBSDKLoginKit (4.10.1):
     - FBSDKCoreKit
   - FBSDKMessengerShareKit (1.3.2)
-  - FBSDKShareKit (4.8.0):
+  - FBSDKShareKit (4.10.1):
     - FBSDKCoreKit
   - googleplus-ios-sdk (1.7.1)
   - HanekeSwift (0.10.1)
-  - IQKeyboardManager (3.3.5)
+  - IQKeyboardManager (4.0.1)
   - JTSImageViewController (1.5.1)
   - MBProgressHUD (0.9.2)
-  - PayPal-iOS-SDK (2.13.0):
-    - PayPal-iOS-SDK/CardIO (= 2.13.0)
-    - PayPal-iOS-SDK/Core (= 2.13.0)
-  - PayPal-iOS-SDK/CardIO (2.13.0):
-    - CardIO (~> 5.2.2)
-  - PayPal-iOS-SDK/Core (2.13.0)
-  - SDWebImage (3.7.4):
-    - SDWebImage/Core (= 3.7.4)
-  - SDWebImage/Core (3.7.4)
+  - PayPal-iOS-SDK (2.14.1):
+    - PayPal-iOS-SDK/CardIO (= 2.14.1)
+    - PayPal-iOS-SDK/Core (= 2.14.1)
+  - PayPal-iOS-SDK/CardIO (2.14.1):
+    - CardIO (~> 5.3.1)
+  - PayPal-iOS-SDK/Core (2.14.1)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
   - SwiftyJSON (2.3.2)
-  - TwitterCore (1.15.0):
+  - TwitterCore (2.0.2):
     - Fabric
-  - TwitterKit (1.15.0):
-    - TwitterCore (= 1.15.0)
+  - TwitterKit (2.0.2):
+    - TwitterCore (= 2.0.2)
   - UICKeyChainStore (2.1.0)
 
 DEPENDENCIES:
@@ -110,40 +103,40 @@ DEPENDENCIES:
   - UICKeyChainStore
 
 SPEC CHECKSUMS:
-  Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
-  AWSAutoScaling: effea7f5902b3c7536fdbc85a169f7a4e4dcbbbc
-  AWSCloudWatch: 9349044542bc21b71082c5b62210b88ce882c6f5
-  AWSCognito: 3c1209a21a7661c079a59e04f5b5dab4f794561c
-  AWSCore: b12704516e21ed34cfe7547e07ab945b079d1f56
-  AWSDynamoDB: daa28bee19a48bf8f3cf2d9155f142975593f18f
-  AWSEC2: b468c03ef1d78919d622759cb3419568877d6f45
-  AWSElasticLoadBalancing: 215e17af5dd038f14ff13065e5935eff67263fd9
-  AWSKinesis: 62ac732526a31558b0800bd2bf05c7f6390a9040
-  AWSLambda: 01a57576f3e0f444782915c9c9a3b38eb6df9e9f
-  AWSMachineLearning: b2ca4f4704a4c72600ba0e12378adcd9a02e1712
-  AWSMobileAnalytics: 4deace80ad43ac9a20127bc83dd6bccd19d05835
-  AWSS3: 675f59e0c338e61441117f03018187b9deb359c4
-  AWSSES: 899c851127cdc1837749692dc90c28785713fdee
-  AWSSimpleDB: ba3c2c2d3e8503afcb41c1253f0ed35418a21188
-  AWSSNS: d6b874e95c1b9795085bd8e5c9aa0f205a7cbe23
-  AWSSQS: 6b150bbdc971582104ddc1f8660581ff9e21a762
-  Bolts: f52a250053bb517ca874523c3913776359ab3def
-  CardIO: 2460db0f4936f3441b08d51e3904b436d77ec8fc
-  Fabric: e8296d4a1abb3c5eed770cc86b311c862f51d340
-  FBSDKCoreKit: 66a935d17b6e00b6b64e604f2eb9b72c9ab7deb8
-  FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  AWSAutoScaling: 49d9f49984a82852511be4caa2a510f522cd8de1
+  AWSCloudWatch: 45fb53f7b76b4d0260d54b3284fc30cb6c7ebdef
+  AWSCognito: af54fe65171c7c994c134e5d29b1ee60ee234825
+  AWSCore: 917d84b32974136194a905b98c0ae25c9f3350b8
+  AWSDynamoDB: 0bfd95eb10363090d8570a48d5feb4e3d7ec5264
+  AWSEC2: 42f0db0be7ded684b5d5ecf5aa444689fa2bc8ce
+  AWSElasticLoadBalancing: b68b0bb0dce50cc4d1c193c53a42b5963fe78381
+  AWSKinesis: 89c0042637c088ba54f2bb892d285693b44d93e8
+  AWSLambda: 9882d7bf98d368fa7e0c98d0f6e15dbbd4eb0e26
+  AWSMachineLearning: 97768294558e0586d98eb34acaf5fa5961b7b35a
+  AWSMobileAnalytics: 56ce9e671640fbd702f8ce52b0f128e525f3e51c
+  AWSS3: 1caaf6b45100503fecf3d418c394519a89409a74
+  AWSSES: 8d33c48393d459c649cca781a4a4ae553379f846
+  AWSSimpleDB: 0e4f2160b572be584baf8e2ef6ba257117f75114
+  AWSSNS: 37c7f4c80657a621fbabccf7d0f352e3c018fbd0
+  AWSSQS: aa53b836c21a10611120e8bf361feef54fd73ae1
+  Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
+  CardIO: a299efcd0348c3b256a1da53f22951319c3855a2
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  FBSDKCoreKit: d2aaed5e9ab7d8d6301c533376a1fbff1cf3deb5
+  FBSDKLoginKit: 699ff169080e3072de4b9b0faca90bf23dc36deb
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
-  FBSDKShareKit: e7577ee3adf80fc04fb656dd133fbb522250672b
+  FBSDKShareKit: 2fd887cce0056bdda91f99b2021d724a4fed8e88
   googleplus-ios-sdk: 065d9135061a5f84c07656a68ced48336408fe35
   HanekeSwift: 08e47d3d0f2899ec58e5d257beba0de619aca9e8
-  IQKeyboardManager: 128bcb96b3ec03ff87942cdd7fa7f44491aa3d08
+  IQKeyboardManager: 0c11a0cb402a621f7aa1aff506f60ab6d2388969
   JTSImageViewController: 1f8ce1cc93dab0d0af8e53badeea7528560cfec9
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  PayPal-iOS-SDK: 931720b5e38fcece8f10a007ec46b283a272c1d9
-  SDWebImage: 247edd7dd80dd6124197b0d6a17846fe9d1df968
+  PayPal-iOS-SDK: eff00b909adb00ec99bed0493b041e17fd1ec8c5
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  TwitterCore: 9d9a41696684888563acc272e80ec3e33c9d18f7
-  TwitterKit: d99c16a48dbe22a950edf9135527c494ad36daaa
+  TwitterCore: 0f44d8980a6879d5205dcb4e010d15e643e56fa0
+  TwitterKit: c4e40f289a3d7cc9fab9f241edd7502385468b65
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
 
 COCOAPODS: 0.39.0

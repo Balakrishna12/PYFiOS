@@ -70,29 +70,38 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
     
     
     func saveToTemporaryFileWithImageURL(imageURL: NSURL!) -> Void {
-    
-        let imageView: UIImageView = UIImageView()
         
-        imageView.sd_setImageWithURL(imageURL, completed: {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL?) in
+        let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let writePath = document.stringByAppendingString("/" + self.gotImage.Name!)
+        
+        if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
+            print("There is such Photo in Library")
             
-            if (image != nil) {
+        } else {
+             print("There is not such Photo. Will save it")
+            
+            let imageView: UIImageView = UIImageView()
+            
+            imageView.sd_setImageWithURL(imageURL, completed: {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL?) in
                 
-                if let data = UIImagePNGRepresentation(image!) {
+                if (image != nil) {
                     
-                    let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
-                    let writePath = document.stringByAppendingString(self.gotImage.Name!)
-                    
-                    data.writeToFile(writePath, atomically: true)
-                    
-//                    do {
-//                        try data.writeToFile(writePath, atomically: true)
-//                    } catch {
-//                    }
-  
+                    if let data = UIImagePNGRepresentation(image!) {
+                        
+                        let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+                        let writePath = document.stringByAppendingString("/" + self.gotImage.Name!)
+                        
+                        data.writeToFile(writePath, atomically: true)
+                        
+                        //let image = UIImage(contentsOfFile: writePath)
+                        
+                        //print("PICTURE - %@", image )
+                        
+                    }
                 }
-            }
-        })
-        
+            })
+            
+        }
     }
     
     func onGetDataSuccess(datas: Array<AnyObject>!, type: Int) {
@@ -192,7 +201,6 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
     //MARK: Buy image
     
     @IBAction func buyImage(sender: AnyObject) {
-        
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         
         let amount = NSDecimalNumber(string: "8.00")
@@ -202,6 +210,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         payment.amount = amount
         payment.currencyCode = "EUR"
         payment.shortDescription = self.selectedImageName
+        
         
         if (self.selectedImageName == nil) {
         
@@ -236,6 +245,13 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                 }
             }
         } else if (self.userImageUrls.contains((IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!))) {
+            
+            let savedImage = self.imagesArray[selectedImageIndex] as! ImageMapper
+            
+            let savedImageURL = NSURL(string: IMAGE_CONSTANT_URL + savedImage.Region! + IMAGE_THUMB_STRING + savedImage.Name!)
+            
+            self.saveToTemporaryFileWithImageURL(savedImageURL)
+            
             let checkAlert = UIAlertController(title: "Bought Image", message: "Already got this image", preferredStyle: UIAlertControllerStyle.Alert)
             checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
                 print("Got image", terminator: "")
@@ -261,6 +277,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
     func payPalPaymentViewController(paymentViewController: PayPalPaymentViewController, didCompletePayment completedPayment: PayPalPayment) {
         print("Payment Success", terminator: "")
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -268,16 +285,22 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         
         downloadFile(IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!)
     }
-  
+    
+    
     func downloadSuccess() {
+        
         print("file saved", terminator: "")
+        
         let imageUrl = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
+        
         let date = getDateTime()
         
         let thumbUrl = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_THUMB_STRING + self.gotImage.Name!
         
         userImageDBController.registerPayment(self.userID as String, dateTime: date, imageId: self.gotImage.ImageId!, imageUrl: imageUrl, imageThumbUrl: thumbUrl)
+
     }
+    
     
     func downloadFailed() {
         print("error saving file", terminator: "")
@@ -344,14 +367,12 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             
             let imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
             
-            let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-            let writePath = document.stringByAppendingString(self.gotImage.Name!)
-            
-            let image = UIImage(contentsOfFile: writePath)
-            
-            print("PICTURE - %@", image )
-            
-            //FacebookController().shareImage(self, sharedImage: UIImage(named: "shareImage") )
+//            let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+//            let writePath = document.stringByAppendingString(self.gotImage.Name!)
+//            
+//            let image = UIImage(contentsOfFile: writePath)
+//            
+//            print("PICTURE - %@", image )
             
             FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
         }
