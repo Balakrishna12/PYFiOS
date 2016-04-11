@@ -29,6 +29,8 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     
     var selectedImagesArray: Array<AnyObject> = Array<AnyObject>()
     
+    //MARK: View Life Cycle
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -43,6 +45,8 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         selectedImageIndex = -1
     }
+    
+    //MARK: Internal
     
     func onGetDataSuccess(datas: Array<AnyObject>!, type: Int) {
         if type == USERIMAGE_DB {
@@ -88,22 +92,32 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             
             let image = self.userImages[self.selectedImageIndex]
             
-//            let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-//            let writePath = document.stringByAppendingString("/" + image.ImageId! + ".JPG")
-//            
-//            if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
-//                print("There is such photo in library")
-//            } else {
-//                print("There is not such photo in library")
-//            }
+            let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            let writePath = document.stringByAppendingString("/" + image.ImageId! + ".JPG")
+            
+            if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
+                print("There is such photo in library")
+                let image = UIImage(contentsOfFile: writePath)
+                
+                FacebookController().sharePicture(self, sharedImage: image)
+                
+            } else {
+                print("There is not such photo in library")
+                
+                self.saveToTemporaryFileWithImageURL(NSURL(string: image.ImageThumbUrl!), imageName: image.ImageId, completion: { (result) in
+                    let image = UIImage(contentsOfFile: writePath)
+                    FacebookController().sharePicture(self, sharedImage: image)
+
+                })
+            }
             
             
-            fbController.shareImageToFacebook(self, thumbImage: image.ImageThumbUrl!, placeId: result.Facebook!, fullImage: image.ImageUrl!)
+            //fbController.shareImageToFacebook(self, thumbImage: image.ImageThumbUrl!, placeId: result.Facebook!, fullImage: image.ImageUrl!)
             
         }
     }
     
-    
+ 
     
     func downloadFile(imageUrl: String) {
 
@@ -113,6 +127,47 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
     func onGetDataFailed(error: String!) {
         print(error, terminator: "")
     }
+    
+    func saveToTemporaryFileWithImageURL(imageURL: NSURL!, imageName: String!, completion: (result: Bool) -> Void){
+        
+        let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+        let writePath = document.stringByAppendingString("/" + imageName + ".JPG")
+        
+
+        if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
+            print("There is such Photo in Library")
+            
+            completion(result: true)
+            
+        } else {
+            print("There is not such Photo. Will save it")
+            
+            let imageView: UIImageView = UIImageView()
+            
+            imageView.sd_setImageWithURL(imageURL, completed: {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL?) in
+                
+                if (image != nil) {
+                    
+                    if let data = UIImagePNGRepresentation(image!) {
+                        
+                        data.writeToFile(writePath, atomically: true)
+                        
+                        
+                        
+                        //print("PICTURE - %@", image )
+                        
+                        completion(result: true)
+                        
+                    }
+                } else {
+                    completion(result: false)
+                }
+            })
+            
+        }
+    }
+    
+    //MARK: Collection View Data Source
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -137,6 +192,8 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         return cell
     }
     
+    //MARK: Collection View Delegate
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let width = screenSize.width
@@ -152,6 +209,8 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         let imageViewer = JTSImageViewController(imageInfo: imageInfo, mode: JTSImageViewControllerMode.Image, backgroundStyle: JTSImageViewControllerBackgroundOptions.Blurred)
         imageViewer.showFromViewController(self.parentViewController, transition: JTSImageViewControllerTransition.FromOriginalPosition)
     }
+    
+    //MARK: Actions
     
     func onRadioClicked(flag: Bool, selectedCell: ImageGalleryViewCell) {
         

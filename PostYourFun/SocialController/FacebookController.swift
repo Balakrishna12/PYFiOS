@@ -10,6 +10,7 @@ import Foundation
 import FBSDKCoreKit
 import FBSDKLoginKit
 import FBSDKShareKit
+import FBSDKMessengerShareKit
 
 class FacebookController {
     
@@ -87,32 +88,18 @@ class FacebookController {
     }
     
     
-//    func shareImage(viewController: UIViewController, sharedImage: UIImage?) {
-//        
-//        
-//        let sharePhoto: FBSDKSharePhoto = FBSDKSharePhoto()
-//        sharePhoto.image = sharedImage
-//        sharePhoto.caption = "Post Your Fun Image Share"
-//        sharePhoto.userGenerated = true
-//        
-//        let content = FBSDKSharePhotoContent()
-//        content.photos = [ sharePhoto ]
-//        content.contentURL = NSURL(string: "")
-//        
-//        let dialog = FBSDKShareDialog()
-//        dialog.delegate = nil
-//        dialog.shareContent = content
-//        
-//        dialog.mode = FBSDKShareDialogMode.ShareSheet
-//        
-//        dialog.show()
-//        
-//        //FBSDKShareAPI.shareWithContent(content, delegate: nil)
-//
-//        //FBSDKShareDialog.showFromViewController(viewController, withContent: content, delegate: nil)
-//
-//        
-//    }
+    func sharePicture(viewController: UIViewController, sharedImage: UIImage?) {
+
+        let sharePhoto: FBSDKSharePhoto = FBSDKSharePhoto()
+        sharePhoto.image = sharedImage
+        sharePhoto.caption = "Post Your Fun"
+        sharePhoto.userGenerated = true
+        
+        let content = FBSDKSharePhotoContent()
+        content.photos = [sharePhoto]
+
+        FBSDKShareDialog.showFromViewController(viewController, withContent: content, delegate: nil)
+    }
     
 }
 

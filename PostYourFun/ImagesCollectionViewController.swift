@@ -57,6 +57,8 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         self.getUserImages()
     }
     
+    //MARK: Internal
+    
     func getUserImages() {
         
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -68,8 +70,15 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         userImageDBController.readTransactions(self.userID)
     }
     
+    func savePictureInPhotoAlbum(picture: UIImage!) {
+        
+       let customPhotoAlbum = CustomPhotoAlbum.sharedInstance
+        customPhotoAlbum.saveImage(picture);
+
+    }
     
-    func saveToTemporaryFileWithImageURL(imageURL: NSURL!) -> Void {
+
+    func saveToTemporaryFileWithImageURL(imageURL: NSURL!, completion: (result: Bool) -> Void){
         
         let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let writePath = document.stringByAppendingString("/" + self.gotImage.Name!)
@@ -77,8 +86,10 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
             print("There is such Photo in Library")
             
+            completion(result: true)
+            
         } else {
-             print("There is not such Photo. Will save it")
+            print("There is not such Photo. Will save it")
             
             let imageView: UIImageView = UIImageView()
             
@@ -93,11 +104,15 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                         
                         data.writeToFile(writePath, atomically: true)
                         
-                        //let image = UIImage(contentsOfFile: writePath)
+                        let image = UIImage(contentsOfFile: writePath)
                         
-                        //print("PICTURE - %@", image )
+                        print("PICTURE - %@", image )
+                        
+                        completion(result: true)
                         
                     }
+                } else {
+                    completion(result: false)
                 }
             })
             
@@ -227,30 +242,32 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             
             let savedImageURL = NSURL(string: IMAGE_CONSTANT_URL + savedImage.Region! + IMAGE_THUMB_STRING + savedImage.Name!)
             
-            self.saveToTemporaryFileWithImageURL(savedImageURL)
-            
-            if (freeDownload){
-                MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                self.selectedImageUrl = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
-                self.downloadSuccess()
-//                downloadFile(self.selectedImageUrl)
-            }else{
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                if (!payment.processable) {
-                    print("You messed up!", terminator: "")
-                } else {
-                    print("Payment start", terminator: "")
-                    let paymentViewController = PayPalPaymentViewController(payment: payment, configuration: config, delegate: self)
-                    self.presentViewController(paymentViewController!, animated: false, completion: nil)
+            self.saveToTemporaryFileWithImageURL(savedImageURL, completion: { (result) in
+                
+                if (self.freeDownload) {
+                    MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    
+                    self.selectedImageUrl = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
+                    
+                    self.downloadSuccess()
+                    
+                }else{
+                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                    
+                    if (!payment.processable) {
+                        print("You messed up!", terminator: "")
+                        
+                    } else {
+                        print("Payment start", terminator: "")
+                        let paymentViewController = PayPalPaymentViewController(payment: payment, configuration: self.config, delegate: self)
+                        self.presentViewController(paymentViewController!, animated: false, completion: nil)
+                        
+                    }
                 }
-            }
+                
+            })
+            
         } else if (self.userImageUrls.contains((IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!))) {
-            
-            let savedImage = self.imagesArray[selectedImageIndex] as! ImageMapper
-            
-            let savedImageURL = NSURL(string: IMAGE_CONSTANT_URL + savedImage.Region! + IMAGE_THUMB_STRING + savedImage.Name!)
-            
-            self.saveToTemporaryFileWithImageURL(savedImageURL)
             
             let checkAlert = UIAlertController(title: "Bought Image", message: "Already got this image", preferredStyle: UIAlertControllerStyle.Alert)
             checkAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction) -> Void in
@@ -357,24 +374,26 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                 
-                var placeId = ""
-                
-                for parkInfo: ParkSocialMediaMapper in self.parkSocialInfos {
-                    if self.selectedParkId == parkInfo.ParkId {
-                        placeId = parkInfo.Facebook!
-                    }
-                }
+//                var placeId = ""
+//                
+//                for parkInfo: ParkSocialMediaMapper in self.parkSocialInfos {
+//                    if self.selectedParkId == parkInfo.ParkId {
+//                        placeId = parkInfo.Facebook!
+//                    }
+//                }
             
-            let imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
+            //let imagePath = IMAGE_CONSTANT_URL + self.gotImage.Region! + IMAGE_FULL_STRING + self.gotImage.Name!
             
-//            let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-//            let writePath = document.stringByAppendingString(self.gotImage.Name!)
-//            
-//            let image = UIImage(contentsOfFile: writePath)
-//            
-//            print("PICTURE - %@", image )
+            let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            let writePath = document.stringByAppendingString("/" + self.gotImage.Name!)
             
-            FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
+            let image = UIImage(contentsOfFile: writePath)
+            
+            //print("PICTURE - %@", image )
+            
+//            FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
+            
+            FacebookController().sharePicture(self, sharedImage: image)
         }
     }
     

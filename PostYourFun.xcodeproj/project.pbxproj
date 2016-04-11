@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		447D9E861CBBD8B100971673 /* CustomPhotoAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447D9E851CBBD8B100971673 /* CustomPhotoAlbum.swift */; };
+		447D9E8A1CBBF88400971673 /* CustomAssetsPhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447D9E891CBBF88400971673 /* CustomAssetsPhotoManager.swift */; };
 		449768CF1CB67D91000D613F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 449768CE1CB67D91000D613F /* AssetsLibrary.framework */; };
 		7438BF8B1B72B45800992AD2 /* DeviceDBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438BF891B72B45800992AD2 /* DeviceDBController.swift */; };
 		7438BF8C1B72B45800992AD2 /* UserImageDBController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7438BF8A1B72B45800992AD2 /* UserImageDBController.swift */; };
@@ -69,6 +71,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		447D9E851CBBD8B100971673 /* CustomPhotoAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPhotoAlbum.swift; sourceTree = "<group>"; };
+		447D9E891CBBF88400971673 /* CustomAssetsPhotoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAssetsPhotoManager.swift; path = AlbumManager/CustomAssetsPhotoManager.swift; sourceTree = "<group>"; };
 		449768CE1CB67D91000D613F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		67027543B97D0590AE303D08 /* Pods_PostYourFun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PostYourFun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE0EB630E818F41A59FE978 /* Pods-PostYourFun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PostYourFun.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PostYourFun/Pods-PostYourFun.debug.xcconfig"; sourceTree = "<group>"; };
@@ -156,6 +160,15 @@
 				C8F52B915E4D2127AC848EBB /* Pods-PostYourFun.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		447D9E801CBBD74000971673 /* AlbumManager */ = {
+			isa = PBXGroup;
+			children = (
+				447D9E851CBBD8B100971673 /* CustomPhotoAlbum.swift */,
+				447D9E891CBBF88400971673 /* CustomAssetsPhotoManager.swift */,
+			);
+			name = AlbumManager;
 			sourceTree = "<group>";
 		};
 		7505BBD51C4907710047DF34 /* Cell */ = {
@@ -275,6 +288,7 @@
 				E28C54181B5D6E5800CFBD74 /* ViewControllers */,
 				E27561C71B5ED2BC001BC679 /* SocialController */,
 				E28C541D1B5D71C500CFBD74 /* Views */,
+				447D9E801CBBD74000971673 /* AlbumManager */,
 				E28C53E01B5D4A0300CFBD74 /* AppDelegate.swift */,
 				E28C53E21B5D4A0300CFBD74 /* ViewController.swift */,
 				E24FC8751B5E532B0094F6B2 /* PYFConstants.swift */,
@@ -549,7 +563,9 @@
 				7505BBF91C491C8F0047DF34 /* ImagePreviewViewController.swift in Sources */,
 				E27590941B65668800295682 /* AWSControllerDelegate.swift in Sources */,
 				E24FC8711B5E1D330094F6B2 /* ViewImageViewController.swift in Sources */,
+				447D9E8A1CBBF88400971673 /* CustomAssetsPhotoManager.swift in Sources */,
 				E24F22DF1B63E3540023FD41 /* ParkInformationMapper.swift in Sources */,
+				447D9E861CBBD8B100971673 /* CustomPhotoAlbum.swift in Sources */,
 				E27590961B656A3800295682 /* AWSDynamoDBGetDataDelegate.swift in Sources */,
 				7505BBD71C4907900047DF34 /* ImageCollectionCell.swift in Sources */,
 				E24F22E11B63E4F80023FD41 /* ParkSocialMediaMapper.swift in Sources */,
@@ -764,7 +780,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d5392dbb-05b4-470b-af26-91704720debc";
+				PROVISIONING_PROFILE = "261ae846-fa44-4450-aaf7-2b20b1dac7fd";
 				SWIFT_OBJC_BRIDGING_HEADER = "PostYourFun/PostYourFun-Bridge-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
