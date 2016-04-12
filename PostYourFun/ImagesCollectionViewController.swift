@@ -77,7 +77,6 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
 
     }
     
-
     func saveToTemporaryFileWithImageURL(imageURL: NSURL!, completion: (result: Bool) -> Void){
         
         let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]

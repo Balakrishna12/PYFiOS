@@ -86,7 +86,6 @@ class ImageQueryDBController {
             
             queryExpression.filterExpression = scanInput.filterExpression
             
-            
             dynamoDBObjectMapper.scan(ImageQueryMapper.self, expression: queryExpression).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
                 
                 count = count + 1

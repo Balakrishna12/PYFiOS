@@ -122,16 +122,16 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
         if type == IMAGEQUERY_DB {
             let image = datas as! Array<ImageQueryMapper>
             if image.count > 0 {
-                self.imageDBController.getImages()
+                self.imageDBController.getImages(selectedDevice)
             }
         }
         if type == IMAGE_DB {
             
-            let image = datas as! Array<ImageMapper>
+            let images = datas as! Array<ImageMapper>
             
             let controller = self.storyboard?.instantiateViewControllerWithIdentifier("ImagesCollectionViewController") as! ImagesCollectionViewController
             
-            controller.imagesArray = image
+            controller.imagesArray = images
             controller.selectedParkId = self.selectedParkId
             controller.parkSocialInfos = self.parkSocialInfos
             controller.freeDownload = self.freeDownload
@@ -143,7 +143,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
         if type == USERIMAGE_DB{
             self.userImages = datas as! Array<UserImagesMapper>
             self.userImageUrls.removeAll()
-            for userImage in self.userImages{
+            for userImage in self.userImages {
                 self.userImageUrls.append(userImage.ImageUrl!)
             }
         }

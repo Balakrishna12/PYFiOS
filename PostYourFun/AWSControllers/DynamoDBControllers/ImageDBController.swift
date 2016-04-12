@@ -54,7 +54,7 @@ class ImageDBController {
         })
     }
     
-    func getImages() {
+    func getImages(selectedDevice: DeviceMapper) {
         self.image.removeAll()
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
         let queryExpression = AWSDynamoDBScanExpression()
@@ -76,7 +76,10 @@ class ImageDBController {
             if task.result != nil {
                 let result = task.result as! AWSDynamoDBPaginatedOutput
                 for item in result.items as! [ImageMapper] {
-                    self.image.append(item);
+                    
+                    if item.DeviceId == selectedDevice.DeviceId {
+                        self.image.append(item);
+                    }
                 }
                 
                 if self.aGetDataDelegate != nil{

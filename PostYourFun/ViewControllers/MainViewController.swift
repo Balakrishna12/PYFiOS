@@ -138,7 +138,9 @@ class MainViewController: UIViewController, CustomTabButtonDelegate {
                         }
                     }
                     viewController.view.frame = CGRectMake(0, 0, width, height)
+                    
                 }, completion: { (Bool) -> Void in
+                    
                     self.currentViewController.view.removeFromSuperview()
                     self.currentViewController.removeFromParentViewController()
                     
