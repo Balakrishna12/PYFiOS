@@ -162,7 +162,7 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
             
             FacebookController().shareToFacebook(self, description: description, parkName: self.parkSelector.text, parkUrl: self.selectedParkInfo.WebSite, imageUrl: self.selectedParkInfo.ImageUrl, placeId: self.selectedparkSocialInfo.Facebook)
             //Give Rating on AWS
-            self.deviceRatingDBController.giveRating(self.userId, deviceId: self.selectedDeviceId, speedRate: String(speedRate), g_forceRate: String(g_force), adrenalineRate: String(adrenaline), comment: self.commentTextfield.text!)
+            self.deviceRatingDBController.giveRating(self.userId, deviceId: self.selectedDeviceId, speedRate: String(speedRate), g_forceRate: String(g_force), adrenalineRate: String(adrenaline))
         }
     }
     

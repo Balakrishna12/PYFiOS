@@ -100,7 +100,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
                 
                 let image = UIImage(contentsOfFile: writePath)
                 
-                CustomPhotoAlbum.sharedInstance.saveImage(image!)
+                //CustomPhotoAlbum.sharedInstance.saveImage(image!)
                 
                 FacebookController().sharePicture(self, sharedImage: image)
                 
@@ -110,7 +110,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
                 self.saveToTemporaryFileWithImageURL(NSURL(string: image.ImageThumbUrl!), imageName: image.ImageId, completion: { (result) in
                     let image = UIImage(contentsOfFile: writePath)
                     
-                    CustomPhotoAlbum.sharedInstance.saveImage(image!)
+                    //CustomPhotoAlbum.sharedInstance.saveImage(image!)
                     
                     FacebookController().sharePicture(self, sharedImage: image)
 

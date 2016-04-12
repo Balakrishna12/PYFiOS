@@ -13,7 +13,7 @@ class DeviceRatingDBController {
     var aDelegate: AWSControllerDelegate!
     var deviceRate: DeviceRatingMapper = DeviceRatingMapper()
 
-    func giveRating(userId: String, deviceId: String, speedRate: String, g_forceRate: String, adrenalineRate: String, comment: String) {
+    func giveRating(userId: String, deviceId: String, speedRate: String, g_forceRate: String, adrenalineRate: String) {
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.defaultDynamoDBObjectMapper()
         
         self.deviceRate.RatingId = deviceId + "_" + userId
@@ -21,7 +21,6 @@ class DeviceRatingDBController {
         self.deviceRate.DeviceId = deviceId
         self.deviceRate.Speed = speedRate
         self.deviceRate.AdrenalineKick = adrenalineRate
-        self.deviceRate.Comment = comment
         self.deviceRate.G_force = g_forceRate
         
         dynamoDBObjectMapper.save(deviceRate).continueWithExecutor(AWSExecutor.mainThreadExecutor(), withBlock: { (task: AWSTask!) -> AnyObject! in
