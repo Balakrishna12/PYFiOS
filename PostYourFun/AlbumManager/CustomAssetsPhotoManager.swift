@@ -18,16 +18,14 @@ class CustomAssetsPhotoManager{
     var assetsLibrary: ALAssetsLibrary = ALAssetsLibrary()
     
     var isAlbum: Bool = false
-    
-    //let currentAssetsGroup: ALAssetsGroup
+
     var currentAssetsGroup: ALAssetsGroup!
-    
     
     init () {
         
         assetsLibrary.enumerateGroupsWithTypes(ALAssetsGroupAlbum, usingBlock: { (group, stop) in
             
-            print("GROUP: %@", group)
+            //print("GROUP: %@", group)
             
             let propertyName = group.valueForProperty(ALAssetsGroupPropertyName) as! NSString
             
@@ -35,26 +33,23 @@ class CustomAssetsPhotoManager{
                 self.isAlbum = true
                 self.currentAssetsGroup = group
             }
-            
-//            if stop.memory {
-//                
-//            }
+   
             
             }) { (error) in
                  print("failed to enumerate albums:\nError: %@", error);
         }
         
-        if !isAlbum {
-        
-            self.assetsLibrary.addAssetsGroupAlbumWithName(CustomAssetsPhotoManager.albumName as String, resultBlock: { (group) in
-                print("added album: PYF");
-                self.currentAssetsGroup = group
-                
-            }) { (error) in
-                print("error adding album %@", error);
-            }
-            
-        }
+//        if !isAlbum {
+//        
+//            self.assetsLibrary.addAssetsGroupAlbumWithName(CustomAssetsPhotoManager.albumName as String, resultBlock: { (group) in
+//                print("added album: PYF");
+//                self.currentAssetsGroup = group
+//                
+//            }) { (error) in
+//                print("error adding album %@", error);
+//            }
+//            
+//        }
     
         
     }

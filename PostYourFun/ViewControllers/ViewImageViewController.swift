@@ -97,7 +97,10 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
             
             if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
                 print("There is such photo in library")
+                
                 let image = UIImage(contentsOfFile: writePath)
+                
+                CustomPhotoAlbum.sharedInstance.saveImage(image!)
                 
                 FacebookController().sharePicture(self, sharedImage: image)
                 
@@ -106,14 +109,13 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
                 
                 self.saveToTemporaryFileWithImageURL(NSURL(string: image.ImageThumbUrl!), imageName: image.ImageId, completion: { (result) in
                     let image = UIImage(contentsOfFile: writePath)
+                    
+                    CustomPhotoAlbum.sharedInstance.saveImage(image!)
+                    
                     FacebookController().sharePicture(self, sharedImage: image)
 
                 })
             }
-            
-            
-            //fbController.shareImageToFacebook(self, thumbImage: image.ImageThumbUrl!, placeId: result.Facebook!, fullImage: image.ImageUrl!)
-            
         }
     }
     
@@ -132,7 +134,6 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         
         let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let writePath = document.stringByAppendingString("/" + imageName + ".JPG")
-        
 
         if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
             print("There is such Photo in Library")
@@ -151,9 +152,7 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
                     if let data = UIImagePNGRepresentation(image!) {
                         
                         data.writeToFile(writePath, atomically: true)
-                        
-                        
-                        
+
                         //print("PICTURE - %@", image )
                         
                         completion(result: true)

@@ -66,7 +66,6 @@ class CustomPhotoAlbum {
         photo = image;
         
         if assetCollection == nil {
-            
             array.removeAllObjects()
             firstLoad = true;
             
@@ -108,12 +107,11 @@ class CustomPhotoAlbum {
                             
                             }, completionHandler: nil)
                     }
-
                 }
             }
             
         } else {
-            
+        
             PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                 
                 let assetChangeRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(image)
@@ -130,12 +128,12 @@ class CustomPhotoAlbum {
     
     }
     
+    
     func getAllPhotosFromAlbum() -> NSArray! {
         
         if assetCollection == nil {
-            
             array.removeAllObjects()
-            return array   // If there was an error upstream, skip the save.
+            return array
         }
         
         let photoAssets = PHAsset.fetchAssetsInAssetCollection(self.assetCollection, options: nil)
@@ -166,14 +164,7 @@ class CustomPhotoAlbum {
         return array.copy() as! NSArray;
     }
     
-    
-//    func getAllPhotoAsURLs() -> NSArray! {
-//        
-//        let fetchOptions = PHFetchOptions()
-//        fetchOptions.predicate = NSPredicate(format: "title = %@", CustomPhotoAlbum.albumName)
-//        let collection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .Any, options: fetchOptions)
-//        
-//    }
+
     
 
 }

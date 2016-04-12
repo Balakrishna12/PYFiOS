@@ -97,16 +97,14 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                 
                 if (image != nil) {
                     
+                    CustomPhotoAlbum.sharedInstance.saveImage(image!)
+                    
                     if let data = UIImagePNGRepresentation(image!) {
                         
                         let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
                         let writePath = document.stringByAppendingString("/" + self.gotImage.Name!)
                         
                         data.writeToFile(writePath, atomically: true)
-                        
-                        let image = UIImage(contentsOfFile: writePath)
-                        
-                        print("PICTURE - %@", image )
                         
                         completion(result: true)
                         
