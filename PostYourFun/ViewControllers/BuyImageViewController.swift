@@ -9,10 +9,9 @@
 import UIKit
 import MBProgressHUD
 
-//protocol ImageDownloadDelegate{
-//    func downloadSuccess()
-//    func downloadFailed()
-//}
+protocol BuyImageViewControllerDelegate {
+    func buyImageViewControllerDidChangePark(parkID: String, parkName: String, device: DeviceMapper)
+}
 
 class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDynamoDBGetDataDelegate, AWSControllerDelegate, CustomTextFieldDelegate, PayPalPaymentDelegate, ImageDownloadDelegate {
 
@@ -22,7 +21,6 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
     @IBOutlet weak var btnGetImage: UIButton!
     @IBOutlet weak var selectedImage: UIImageView!
     @IBOutlet weak var btnBuyImage: UIButton!
-    //@IBOutlet weak var lblImagePrice: UILabel!
     
     var parks: Array<ParkMapper>!
     var rides: Array<DeviceMapper>!
@@ -55,6 +53,8 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
     var fbController = FacebookController()
     
     var imageDownloadDelegate: ImageDownloadDelegate!
+    var delegate:BuyImageViewControllerDelegate?
+    
     
     override func viewDidLoad() {
         
@@ -72,8 +72,6 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
         self.fbController.mDelegate = self
         
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        
-//        selectedImage.image = UIImage(named: "default_image")
         
         userId = NSUserDefaults.standardUserDefaults().objectForKey(kUserId) as? String
         
@@ -154,7 +152,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
     }
     
     func initView() {
-        
+        // preparing
         parkTextField.setTextFieldType(.Picker)
         parkTextField.pickerDatas = self.parkNames
         parkTextField.mDelegate = self
@@ -162,7 +160,7 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
         
         rideTextField.setTextFieldType(.Picker)
         rideTextField.mDelegate = self
-
+        
         let selectedPark = parks[0]
         
         if (selectedPark.AllInclusive == 1) {
@@ -177,11 +175,77 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
                 self.rideNames.append(ride.Name!)
             }
         }
+        
         rideTextField.changePickerDatas(self.rideNames)
         self.selectedDevice = self.selectedDevices[0]
+        
+        // picker first action
+        parkTextField.pickerIndex = 0
+        
+        let index = parkTextField.pickerIndex
+        
+        selectedDevices.removeAll()
+        rideNames.removeAll()
+        
+        let parkName: String
+        
+        if index != nil {
+            let selectedPark = self.parks[index]
+            print(selectedPark.AllInclusive, terminator: "")
+            print(selectedPark.Name, terminator: "")
+            parkName = selectedPark.Name!
+            
+            for ride in self.rides{
+                if ride.ParkId == selectedPark.ParkId{
+                    self.selectedDevices.append(ride)
+                    self.rideNames.append(ride.Name!)
+                }
+            }
+            rideTextField.changePickerDatas(self.rideNames)
+            self.selectedParkId = self.parks[index].ParkId
+            self.selectedDevice = self.selectedDevices[0]
+            
+            delegate?.buyImageViewControllerDidChangePark(self.selectedParkId, parkName:parkName, device: self.selectedDevice)
+            
+            if (selectedPark.AllInclusive == 1) {
+                
+                self.freeDownload = true
+            } else{
+                
+                self.freeDownload = false
+            }
+        }
+        
+        self.selectedDevice = self.selectedDevices[index]
+
+        
+//        parkTextField.setTextFieldType(.Picker)
+//        parkTextField.pickerDatas = self.parkNames
+//        parkTextField.mDelegate = self
+//        parkTextField.text = parks[0].Name
+//        
+//        rideTextField.setTextFieldType(.Picker)
+//        rideTextField.mDelegate = self
+//
+//        let selectedPark = parks[0]
+//        
+//        if (selectedPark.AllInclusive == 1) {
+//            self.freeDownload = true
+//        } else {
+//            self.freeDownload = false
+//        }
+//        
+//        for ride in self.rides {
+//            if ride.ParkId == selectedPark.ParkId {
+//                self.selectedDevices.append(ride)
+//                self.rideNames.append(ride.Name!)
+//            }
+//        }
+//        rideTextField.changePickerDatas(self.rideNames)
+//        self.selectedDevice = self.selectedDevices[0]
     }
     
-    // MARK: - CustomTextFieldDelegate
+    //MARK: - CustomTextFieldDelegate
     func customTextFieldDidEndEditing(sender: AnyObject)
     {
         let textField = sender as! CustomTextField
@@ -192,10 +256,14 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
             selectedDevices.removeAll()
             rideNames.removeAll()
             
+            let parkName: String
+            
             if index != nil {
                 let selectedPark = self.parks[index]
                 print(selectedPark.AllInclusive, terminator: "")
                 print(selectedPark.Name, terminator: "")
+                parkName = selectedPark.Name!
+                
                 for ride in self.rides{
                     if ride.ParkId == selectedPark.ParkId{
                         self.selectedDevices.append(ride)
@@ -205,11 +273,14 @@ class BuyImageViewController: UIViewController, SocialControllerDelegate, AWSDyn
                 rideTextField.changePickerDatas(self.rideNames)
                 self.selectedParkId = self.parks[index].ParkId
                 self.selectedDevice = self.selectedDevices[0]
+
+                delegate?.buyImageViewControllerDidChangePark(self.selectedParkId, parkName:parkName, device: self.selectedDevice)
+                
                 if (selectedPark.AllInclusive == 1) {
-                    //self.lblImagePrice.text = ""
+                    
                     self.freeDownload = true
                 } else{
-                    //self.lblImagePrice.text = "8 EUR for full quality image"
+                    
                     self.freeDownload = false
                 }
             }

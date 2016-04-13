@@ -64,13 +64,14 @@ class FacebookController {
         }
     }
     
-    func shareToFacebook(viewController: UIViewController, description: String!, parkName: String!, parkUrl: String!, imageUrl: String!, placeId: String!){
+    func shareToFacebook(viewController: UIViewController, description: String!, parkName: String!, parkUrl: String!, imageUrl: String!, placeId: String!) {
         let shareContent = FBSDKShareLinkContent()
         shareContent.contentURL = NSURL(string: parkUrl)
-        shareContent.contentTitle = parkName
         shareContent.imageURL = NSURL(string: imageUrl)
-        shareContent.contentDescription = description
         shareContent.placeID = placeId
+        shareContent.contentTitle = parkName
+        shareContent.contentDescription = description
+        
         
         FBSDKShareDialog.showFromViewController(viewController, withContent: shareContent, delegate: nil)
     }

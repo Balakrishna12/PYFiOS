@@ -162,6 +162,12 @@ class CustomTextField: UITextField, UITextFieldDelegate, UIPickerViewDataSource,
         return false
     }
     
+    func changePickerDatasWithIndex(datas: Array<String>, index: Int) {
+        self.pickerDatas = datas
+        self.picker.reloadAllComponents()
+        self.pickerView(picker, didSelectRow:index, inComponent:0)
+    }
+    
     // MARK: - UITextFieldDelegate
     func textFieldDidBeginEditing(sender: UITextField) {
         self.layer.borderColor = borderColor.CGColor
@@ -212,4 +218,6 @@ class CustomTextField: UITextField, UITextFieldDelegate, UIPickerViewDataSource,
         self.picker.reloadAllComponents()
         self.pickerView(picker, didSelectRow:0, inComponent:0)
     }
+    
+
 }

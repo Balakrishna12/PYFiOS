@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController, CustomTabButtonDelegate {
+class MainViewController: UIViewController, CustomTabButtonDelegate, BuyImageViewControllerDelegate {
 
     @IBOutlet weak var containerView: UIView!
     
@@ -18,6 +18,10 @@ class MainViewController: UIViewController, CustomTabButtonDelegate {
     
     var currentViewController: UIViewController!
     var currentTabIdentifier: Int!
+    
+    var currentSelectedDevice: DeviceMapper!
+    var currentSelectedParkID: String!
+    var currentSelectedParkName: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +36,17 @@ class MainViewController: UIViewController, CustomTabButtonDelegate {
         }
     }
     
+    //MARK: Buy Image View Controller Delegate
+    
+    func buyImageViewControllerDidChangePark(parkID: String, parkName: String, device: DeviceMapper) {
+        //print("PARK_ID:" + parkID + "/DEVICE_ID:" + device.DeviceId!)
+        
+        self.currentSelectedParkID = parkID
+        self.currentSelectedDevice = device
+        self.currentSelectedParkName = parkName
+    }
+    
+    //MARK: Actions
 
     func didSelectTabButton(selected: Bool, identifier: Int) {
         for tag in tagBuyTab...tagViewTab
@@ -61,6 +76,7 @@ class MainViewController: UIViewController, CustomTabButtonDelegate {
             if buyViewController == nil
             {
                 buyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("buyImageViewController") as! BuyImageViewController
+                buyViewController.delegate = self
             }
             
             animationWithViewController(buyViewController, identifier: identifier)
@@ -71,6 +87,10 @@ class MainViewController: UIViewController, CustomTabButtonDelegate {
             {
                 rateViewController = self.storyboard?.instantiateViewControllerWithIdentifier("rateViewController") as! RateViewController
             }
+            
+            rateViewController.selectedDevice = currentSelectedDevice
+            rateViewController.selectedParkID = currentSelectedParkID
+            rateViewController.selectedParkName = currentSelectedParkName
             
             animationWithViewController(rateViewController, identifier: identifier)
         }

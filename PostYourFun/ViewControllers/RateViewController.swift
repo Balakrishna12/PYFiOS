@@ -43,6 +43,10 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
     var selectedParkInfo: ParkInformationMapper!
     var selectedparkSocialInfo: ParkSocialMediaMapper!
     
+    var selectedDevice: DeviceMapper!
+    var selectedParkID: String?
+    var selectedParkName: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,9 +68,17 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
         for ride in self.rides{
             self.rideNames.append(ride.Name!)
         }
+//        initView()
+//        // Do any additional setup after loading the view.
+//        setActions()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
         initView()
         // Do any additional setup after loading the view.
         setActions()
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,18 +94,68 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
         rideSelector.setTextFieldType(.Picker)
         rideSelector.mDelegate = self
         rideNames.removeAll()
-        let selectedPark = parks[0]
+        
+        let index = self.indexForSelectedDevice(selectedDevice, selectedParkID: selectedParkID, selelectedParkName: selectedParkName)
+
+        let selectedPark = parks[index]
         for ride in self.rides{
             if ride.ParkId == selectedPark.ParkId{
                 self.selectedDevices.append(ride)
                 self.rideNames.append(ride.Name!)
             }
         }
-        self.selectedParkId = self.parks[0].ParkId
+        self.selectedParkId = self.parks[index].ParkId
         rideSelector.changePickerDatas(self.rideNames)
-        self.selectedDeviceId = self.selectedDevices[0].DeviceId
+         self.selectedDeviceId = self.selectedDevice.DeviceId
+        
+        parkSelector.changePickerDatasWithIndex(self.parkNames, index: index)
+        parkSelector.picker.selectRow(index, inComponent: 0, animated: true)
+        
         rateLabel.text = rateLabelText + rideSelector.text! + " in " + parkSelector.text!
+
+        
+//        let selectedPark = parks[0]
+//        for ride in self.rides{
+//            if ride.ParkId == selectedPark.ParkId{
+//                self.selectedDevices.append(ride)
+//                self.rideNames.append(ride.Name!)
+//            }
+//        }
+//        self.selectedParkId = self.parks[0].ParkId
+//        rideSelector.changePickerDatas(self.rideNames)
+//        self.selectedDeviceId = self.selectedDevices[0].DeviceId
+//        rateLabel.text = rateLabelText + rideSelector.text! + " in " + parkSelector.text!
     }
+    
+    func indexForSelectedDevice(selectedDevice: DeviceMapper, selectedParkID: String!, selelectedParkName: String!) -> Int {
+        
+        var index = 0
+        for name in self.parkNames {
+            if name == selelectedParkName {
+                break
+            }
+            index += 1
+        }
+        
+        return index
+    }
+    
+    func parkInfoForSelectedParkID(data: Array<AnyObject>!, selectedParkID: String!) -> ParkInformationMapper {
+        
+        var parkInformationMapper: ParkInformationMapper!
+        
+        for item: AnyObject in data {
+            if item.isKindOfClass(ParkInformationMapper) {
+                if item.ParkId == selectedParkID {
+                    parkInformationMapper = item as! ParkInformationMapper
+                    break
+                }
+            }
+        }
+        
+        return parkInformationMapper
+    }
+    
 
     func customTextFieldDidEndEditing(sender: AnyObject) {
         let textField = sender as! CustomTextField
@@ -143,7 +205,9 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
     func onGetDataSuccess(datas: Array<AnyObject>!, type: Int) {
         if type == PARK_INFO_DB{
             self.delegatecount += 1
-            self.selectedParkInfo = datas[0] as! ParkInformationMapper
+            //self.selectedParkInfo = datas[0] as! ParkInformationMapper
+           
+            self.selectedParkInfo = self.parkInfoForSelectedParkID(datas, selectedParkID: selectedParkId)
         }else if type == PARK_SOCIAL_DB{
             self.delegatecount += 1
             self.selectedparkSocialInfo = datas[0] as! ParkSocialMediaMapper
