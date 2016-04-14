@@ -100,26 +100,28 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
                 
                 let image = UIImage(contentsOfFile: writePath)
                 
-                //CustomPhotoAlbum.sharedInstance.saveImage(image!)
-                
-                FacebookController().sharePicture(self, sharedImage: image)
+                if image != nil {
+                    FacebookController().sharePicture(self, sharedImage: image)
+                }
+
                 
             } else {
                 print("There is not such photo in library")
                 
-                self.saveToTemporaryFileWithImageURL(NSURL(string: image.ImageThumbUrl!), imageName: image.ImageId, completion: { (result) in
+                self.saveToTemporaryFileWithImageURL(NSURL(string: image.ImageUrl!), imageName: image.ImageId, completion: { (result) in
                     let image = UIImage(contentsOfFile: writePath)
                     
-                    //CustomPhotoAlbum.sharedInstance.saveImage(image!)
+                    if image != nil {
+                        FacebookController().sharePicture(self, sharedImage: image)
+                    }
                     
-                    FacebookController().sharePicture(self, sharedImage: image)
+                    //FacebookController().sharePicture(self, sharedImage: image)
 
                 })
             }
         }
     }
-    
- 
+
     
     func downloadFile(imageUrl: String) {
 
@@ -130,11 +132,12 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         print(error, terminator: "")
     }
     
+    
     func saveToTemporaryFileWithImageURL(imageURL: NSURL!, imageName: String!, completion: (result: Bool) -> Void){
         
         let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let writePath = document.stringByAppendingString("/" + imageName + ".JPG")
-
+        
         if (NSFileManager.defaultManager().fileExistsAtPath(writePath)) {
             print("There is such Photo in Library")
             
@@ -143,28 +146,30 @@ class ViewImageViewController: UIViewController, UICollectionViewDelegate, UICol
         } else {
             print("There is not such Photo. Will save it")
             
-            let imageView: UIImageView = UIImageView()
-            
-            imageView.sd_setImageWithURL(imageURL, completed: {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL?) in
-                
-                if (image != nil) {
+            getDataFromUrl(imageURL) { (data, response, error)  in
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
                     
-                    if let data = UIImagePNGRepresentation(image!) {
-                        
-                        data.writeToFile(writePath, atomically: true)
+                    guard let data = data where error == nil else { return }
+                    
+                    data.writeToFile(writePath, atomically: true)
+                    
+                    //let image = UIImage(data: data)
 
-                        //print("PICTURE - %@", image )
-                        
-                        completion(result: true)
-                        
-                    }
-                } else {
-                    completion(result: false)
+                    
+                    completion(result: true)
                 }
-            })
-            
+            }
         }
     }
+    
+    
+    func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+        
+    }
+
     
     //MARK: Collection View Data Source
     

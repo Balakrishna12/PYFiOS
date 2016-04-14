@@ -99,7 +99,9 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
                     
                     let image = UIImage(data: data)
                     
-                    CustomPhotoAlbum.sharedInstance.saveImage(image!)
+                    if image != nil {
+                        CustomPhotoAlbum.sharedInstance.saveImage(image!)
+                    }
                     
                     completion(result: true)
                 }
@@ -385,11 +387,9 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             
             let image = UIImage(contentsOfFile: writePath)
             
-            //print("PICTURE - %@", image )
-            
-//            FacebookController().shareImageToFacebook(self, thumbImage: imagePath, placeId: placeId, fullImage: imagePath)
-            
-            FacebookController().sharePicture(self, sharedImage: image)
+            if image != nil {
+                FacebookController().sharePicture(self, sharedImage: image)
+            }
         }
     }
     

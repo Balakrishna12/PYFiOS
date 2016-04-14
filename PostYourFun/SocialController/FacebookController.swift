@@ -72,8 +72,13 @@ class FacebookController {
         shareContent.contentTitle = parkName
         shareContent.contentDescription = description
         
+        let shareDialog = FBSDKShareDialog()
+        shareDialog.shareContent = shareContent
+        shareDialog.fromViewController = viewController
+        shareDialog.mode = .Native
+        shareDialog.show()
         
-        FBSDKShareDialog.showFromViewController(viewController, withContent: shareContent, delegate: nil)
+        //FBSDKShareDialog.showFromViewController(viewController, withContent: shareContent, delegate: nil)
     }
     
     func shareImageToFacebook(viewController: UIViewController, thumbImage: String, placeId: String, fullImage: String) {

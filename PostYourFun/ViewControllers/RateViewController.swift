@@ -42,10 +42,7 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
     var delegatecount = 0
     var selectedParkInfo: ParkInformationMapper!
     var selectedparkSocialInfo: ParkSocialMediaMapper!
-    
-    var selectedDevice: DeviceMapper!
-    var selectedParkID: String?
-    var selectedParkName: String?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,18 +65,12 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
         for ride in self.rides{
             self.rideNames.append(ride.Name!)
         }
-//        initView()
-//        // Do any additional setup after loading the view.
-//        setActions()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        
         initView()
         // Do any additional setup after loading the view.
         setActions()
-
     }
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -95,36 +86,18 @@ class RateViewController: UIViewController, CustomTextFieldDelegate, SocialContr
         rideSelector.mDelegate = self
         rideNames.removeAll()
         
-        let index = self.indexForSelectedDevice(selectedDevice, selectedParkID: selectedParkID, selelectedParkName: selectedParkName)
-
-        let selectedPark = parks[index]
+        let selectedPark = parks[0]
         for ride in self.rides{
             if ride.ParkId == selectedPark.ParkId{
                 self.selectedDevices.append(ride)
                 self.rideNames.append(ride.Name!)
             }
         }
-        self.selectedParkId = self.parks[index].ParkId
+        self.selectedParkId = self.parks[0].ParkId
         rideSelector.changePickerDatas(self.rideNames)
-         self.selectedDeviceId = self.selectedDevice.DeviceId
-        
-        parkSelector.changePickerDatasWithIndex(self.parkNames, index: index)
-        parkSelector.picker.selectRow(index, inComponent: 0, animated: true)
-        
+        self.selectedDeviceId = self.selectedDevices[0].DeviceId
         rateLabel.text = rateLabelText + rideSelector.text! + " in " + parkSelector.text!
-
         
-//        let selectedPark = parks[0]
-//        for ride in self.rides{
-//            if ride.ParkId == selectedPark.ParkId{
-//                self.selectedDevices.append(ride)
-//                self.rideNames.append(ride.Name!)
-//            }
-//        }
-//        self.selectedParkId = self.parks[0].ParkId
-//        rideSelector.changePickerDatas(self.rideNames)
-//        self.selectedDeviceId = self.selectedDevices[0].DeviceId
-//        rateLabel.text = rateLabelText + rideSelector.text! + " in " + parkSelector.text!
     }
     
     func indexForSelectedDevice(selectedDevice: DeviceMapper, selectedParkID: String!, selelectedParkName: String!) -> Int {
