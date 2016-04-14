@@ -78,7 +78,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     
     func saveToTemporaryFileWithImageURL(imageURL: NSURL!, completion: (result: Bool) -> Void){
-        
+            
         let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
         let writePath = document.stringByAppendingString("/" + self.gotImage.Name!)
         
@@ -90,30 +90,29 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
         } else {
             print("There is not such Photo. Will save it")
             
-            let imageView: UIImageView = UIImageView()
-            
-            imageView.sd_setImageWithURL(imageURL, completed: {(image: UIImage?, error: NSError?, cacheType: SDImageCacheType!, imageURL: NSURL?) in
-                
-                if (image != nil) {
+            getDataFromUrl(imageURL) { (data, response, error)  in
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                    
+                    guard let data = data where error == nil else { return }
+                    
+                    data.writeToFile(writePath, atomically: true)
+                    
+                    let image = UIImage(data: data)
                     
                     CustomPhotoAlbum.sharedInstance.saveImage(image!)
                     
-                    if let data = UIImagePNGRepresentation(image!) {
-                        
-                        let document = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-                        let writePath = document.stringByAppendingString("/" + self.gotImage.Name!)
-                        
-                        data.writeToFile(writePath, atomically: true)
-                        
-                        completion(result: true)
-                        
-                    }
-                } else {
-                    completion(result: false)
+                    completion(result: true)
                 }
-            })
-            
+            }
         }
+    }
+
+    
+    func getDataFromUrl(url: NSURL, completion: ((data: NSData?, response: NSURLResponse?, error: NSError? ) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            completion(data: data, response: response, error: error)
+            }.resume()
+        
     }
     
     func onGetDataSuccess(datas: Array<AnyObject>!, type: Int) {
@@ -237,7 +236,7 @@ class ImagesCollectionViewController: UIViewController, UICollectionViewDataSour
             
             let savedImage = self.imagesArray[selectedImageIndex] as! ImageMapper
             
-            let savedImageURL = NSURL(string: IMAGE_CONSTANT_URL + savedImage.Region! + IMAGE_THUMB_STRING + savedImage.Name!)
+            let savedImageURL = NSURL(string: IMAGE_CONSTANT_URL + savedImage.Region! + IMAGE_FULL_STRING + savedImage.Name!)
             
             self.saveToTemporaryFileWithImageURL(savedImageURL, completion: { (result) in
                 
